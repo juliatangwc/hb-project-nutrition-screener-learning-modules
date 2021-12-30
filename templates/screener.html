@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Healthy Eating for Cancer Survivors{% endblock %}
+{% block content%}
+<h1>Please answer the following questions to help us better serve you</h1>
+<form>
+    <p>1. In the past 7 days, how many days did you eat fruit (excluding juice)?</p>
+    <input type="radio" name="veg_days" value="1">
+    <label>1 day</label>
+    <input type="radio" name="veg_days" value="2">
+    <label>2 days</label>
+    <input type="radio" name="veg_days" value="3">
+    <label>3 days</label>
+    <input type="radio" name="veg_days" value="4">
+    <label>4 days</label>
+    <input type="radio" name="veg_days" value="5">
+    <label>5 days</label>
+    <input type="radio" name="veg_days" value="6">
+    <label>6 days</label>
+    <input type="radio" name="veg_days" value="7">
+    <label>7 days</label>
+    <input type="radio" name="veg_days" value="0">
+    <label>I did not eat fruit in the past 7 days</label>
+
+    <button type="submit">Submit</button>
+
+</form>
+
+
+
+
+{% endblock %}
