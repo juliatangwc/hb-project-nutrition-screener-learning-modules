@@ -4,8 +4,23 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet"
-      href="/static/css/style.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/styles.css">
+
+    <!-- Add JavaScript libraries here -->
+
+    <!-- Babel: used to transpile JSX to JavaScript that the browser can run -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- React: you can't write React components without React -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- React Router: this library makes it easier to create a React app with multiple pages and valid links -->
+    <script src="https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.js"></script>
+    
     <title>{% block title %}Healthy Eating for Cancer Survivors{% endblock %}</title>
   </head>
   <body>

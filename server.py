@@ -8,7 +8,7 @@ def function():
 
 @app.route("/screener")
 def display_screener():
-    return render_template("screener.html")
+    return render_template("screener_react.html")
 
 @app.route("/screener-calculations", methods=["POST"])
 def calculate_cut_offs():
