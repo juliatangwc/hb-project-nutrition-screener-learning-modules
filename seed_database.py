@@ -1,16 +1,16 @@
-  """Script to seed database."""
+"""Script to seed database."""
 
 import os
 import json
 from random import choice, randint
 from datetime import datetime
 
-import crud
+import helper
 import model
 import server
 
-os.system("dropdb dietscreener")
-os.system('createdb dietscreener')
+os.system("dropdb diet-screener")
+os.system('createdb diet-screener')
 
 model.connect_to_db(server.app)
 model.db.create_all()
@@ -37,8 +37,9 @@ model.db.session.commit()
 for n in range(10):
     email = f'user{n}@test.com'
     password = 'test'
+    name = f'User{n}'
 
-    user = helper.create_user(email, password)
+    user = helper.create_user(email, password, name)
     model.db.session.add(user)
 
 model.db.session.commit()

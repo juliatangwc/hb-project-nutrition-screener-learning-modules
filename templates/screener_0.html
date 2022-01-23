@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Healthy Eating for Cancer Survivors{% endblock %}
+{% block content%}
+
+<form action="/processing" method="POST">
+    <h3>Create an Account</h3>
+    <br>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+    <br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+    <br>
+    <input type="hidden" id="tracker" name="tracker" value=0>
+
+    <input type="submit">
+</form>
+
+{% endblock %}

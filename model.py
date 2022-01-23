@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-
 class User(db.Model):
     """A user."""
 
@@ -15,12 +14,13 @@ class User(db.Model):
                         primary_key=True)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    name = db.Column(db.String)
 
     screener = db.relationship('Screener', back_populates="user")
-    assignment = db.relationship('Assignment', back_populates="user")
+    assignment = db.relationship('ModuleAssignment', back_populates="user")
 
     def __repr__(self):
-        return f"<User user_id={self.user_id} email={self.email}>"
+        return f"<User user_id={self.user_id} name={self.name} email={self.email}>"
 
 class Screener(db.Model):
     """A record of screener results."""
@@ -100,10 +100,10 @@ class Module(db.Model):
     module_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String, nullable=False)
     description = db.Column(db.Text)
 
-    assignment = db.relationship('Assignment', back_populates="module")
+    assignment = db.relationship('ModuleAssignment', back_populates="module")
  
 
     def __repr__(self):

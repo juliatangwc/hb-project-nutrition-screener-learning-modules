@@ -1,6 +1,13 @@
-from flask import Flask, render_template, session, request, redirect
+from flask import Flask, render_template, session, request, redirect, flash
+
+from model import connect_to_db, db
+import helper
+
+from jinja2 import StrictUndefined
 
 app = Flask(__name__)
+app.secret_key = "dev"
+app.jinja_env.undefined = StrictUndefined
 
 @app.route("/")
 def function():
@@ -8,7 +15,41 @@ def function():
 
 @app.route("/screener")
 def display_screener():
-    return render_template("screener_react.html")
+
+    return render_template("screener.html")
+
+@app.route("/screener/<question_id>")
+def display_screener_question(question_id):
+    """Render question based on question ID."""
+
+    return render_template(f"screener_{question_id}.html")
+
+@app.route("/processing", methods=["POST"])
+def process_form_to_db():
+    """Write form answers to db"""
+
+    tracker = int(request.form.get("tracker"))
+
+    if tracker == 0:
+        name = request.form.get("name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        user_exist = helper.get_user_by_email(email)
+
+        if user_exist:
+            flash ("This email is already registered on our website. Please log in.")
+            return redirect ("/")
+        else:
+            user = helper.create_user(email, password, name)
+            db.session.add(user)
+            db.session.commit()
+            flash ("Account created.")
+            return redirect("/screener/1")
+    elif tracker ==2:
+        pass
+
+    
 
 @app.route("/screener-calculations", methods=["POST"])
 def calculate_cut_offs():
@@ -94,4 +135,5 @@ def show_whole_grain_info():
 
 
 if __name__ == "__main__":
+    connect_to_db(app)
     app.run(host="0.0.0.0", debug=True)
