@@ -2,8 +2,6 @@
 
 import os
 import json
-from random import choice, randint
-from datetime import datetime
 
 import helper
 import model
@@ -19,18 +17,20 @@ model.db.create_all()
 with open('data/modules.json') as f:
     module_data = json.loads(f.read())
 
+modules = []
 
 for module in module_data:
     # Get the name and description from the module dictionary.
+    print(module)
     name = module['name']
     description = module['description']
-    
+        
     # Create a module
     new_module= helper.create_module(name, description)
+    modules.append(new_module)
 
     # Add module to database
-    model.db.session.add(new_module)
-
+model.db.session.add_all(modules)
 model.db.session.commit()
 
 #Create 10 test users

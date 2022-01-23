@@ -100,7 +100,7 @@ class Module(db.Model):
     module_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, unique=False, nullable=False)
     description = db.Column(db.Text)
 
     assignment = db.relationship('ModuleAssignment', back_populates="module")
@@ -109,7 +109,7 @@ class Module(db.Model):
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
 
-def connect_to_db(flask_app, db_uri="postgresql:///ratings", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///diet-screener", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
