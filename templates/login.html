@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Healthy Eating for Cancer Survivors{% endblock %}
 {% block content%}
-<h1>Login</h1>
+<h1>Log In</h1>
+  <form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+    <p>
+      Password <input type="password" name="password">
+    </p>
+    <p>
+      <input type="submit">
+    </p>
+  </form>
 {% endblock %}

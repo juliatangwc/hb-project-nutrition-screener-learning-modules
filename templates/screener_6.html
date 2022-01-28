@@ -1,0 +1,11 @@
+{% block title %}Healthy Eating for Cancer Survivors{% endblock %}
+{% block content%}
+<form action="/processing" method="POST">
+    <p>6. On the days that you ate red meat, how many servings on average do you eat in a day?<br>
+        (1 serving of red meat: size of your palm)</p>
+    <input type="text" name="rmeat_qty">&nbsp;serving(s) of red meat
+
+    <input type="hidden" id="tracker" name="tracker" value=6>
+    <input type="submit">
+</form>
+{% endblock %}

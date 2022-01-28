@@ -1,0 +1,10 @@
+{% block title %}Healthy Eating for Cancer Survivors{% endblock %}
+{% block content%}
+<form action="/processing" method="POST">
+    <p>10. On the days you ate whole grains, how many bowls did you eat per day on average?</p>
+    <input type="text" name="wgrains_qty">&nbsp;bowl(s) of whole grains
+
+    <input type="hidden" id="tracker" name="tracker" value=10>
+    <input type="submit">
+</form>
+{% endblock %}

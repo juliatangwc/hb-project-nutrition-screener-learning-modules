@@ -1,0 +1,26 @@
+{% block title %}Healthy Eating for Cancer Survivors{% endblock %}
+{% block content%}
+<form action="/processing" method="POST">
+    <p>5. In the past month, how many days in a week did you eat red meat on average?<br>
+        (including beef, pork, lamb, venison, bison)</p>
+        <input type="radio" name="rmeat_days" value="7">
+        <label>Daily</label>
+        <input type="radio" name="rmeat_days" value="6">
+        <label>6 days a week</label>
+        <input type="radio" name="rmeat_days" value="5">
+        <label>5 days a week</label>
+        <input type="radio" name="rmeat_days" value="4">
+        <label>4 days a week</label>
+        <input type="radio" name="rmeat_days" value="3">
+        <label>3 days a week</label>
+        <input type="radio" name="rmeat_days" value="2">
+        <label>2 days a week</label>
+        <input type="radio" name="rmeat_days" value="1">
+        <label>1 day a week</label>
+        <input type="radio" name="rmeat_days" value="0">
+        <label>Less than 1 day a week</label>
+        <input type="radio" name="rmeat_days" value="0">
+        <label>I do not eat red meat</label>
+    <input type="hidden" id="tracker" name="tracker" value=5>
+    <input type="submit">
+{% endblock %}

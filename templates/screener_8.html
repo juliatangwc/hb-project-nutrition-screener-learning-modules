@@ -1,0 +1,11 @@
+{% block title %}Healthy Eating for Cancer Survivors{% endblock %}
+{% block content%}
+<form action="/processing" method="POST">
+    <p>8. On the days that you ate processed meat, how many servings on average do you eat in a day?<br>
+        (1 serving of processed meat: 2 slices of deli meat, 1 hotdog sausage, 2 slices of bacon)</p>
+    <input type="text" name="pmeat_qty">&nbsp;serving(s) of red meat
+
+    <input type="hidden" id="tracker" name="tracker" value=8>
+    <input type="submit">
+</form>
+{% endblock %}

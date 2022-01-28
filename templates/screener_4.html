@@ -1,0 +1,12 @@
+{% block title %}Healthy Eating for Cancer Survivors{% endblock %}
+{% block content%}
+<form action="/processing" method="POST">
+    <p>4. On the days you ate fruit, how many fruit did you eat per day on average?<br>
+    (1 serving of fruit: 1 medium sized apple, ½ large banana, 2 small kiwis/plums, ½ bowl of grapes/berries)</p>
+    <input type="text" name="fruit_qty">&nbsp;serving(s) of fruit
+
+    <input type="hidden" id="tracker" name="tracker" value=4>
+
+    <input type="submit">
+</form>
+{% endblock %}

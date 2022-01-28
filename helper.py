@@ -1,6 +1,7 @@
 """Helper functions."""
 
 from model import db, User, Screener, Progress, ModuleAssignment, Module, connect_to_db
+from datetime import datetime
 
 def create_user(email, password, name):
     """Create and return a new user."""
@@ -15,6 +16,17 @@ def get_user_by_email(email):
         If false, return None."""
     
     return User.query.filter(User.email == email).first()
+
+def check_user_password(email, password):
+    """If password entered matches password in databse, return True.
+        If password does not  match, return False."""
+    
+    user = User.query.filter(User.email == email).first()
+
+    if user.password == password:
+        return user.user_id
+    else:
+        return False
 
 def create_module(name, description):
     """Create and return a new module."""
@@ -59,3 +71,15 @@ def update_progress(screener_id, timestamp, screener_tracker):
     tracker.screener_tracker = screener_tracker
 
     return tracker
+
+def create_timestamp():
+    now = datetime.now()
+    timestamp = now.strftime("%Y/%m/%d %H:%M:%S")
+    return timestamp
+    
+def is_float(element):
+    try:
+        float(element)
+        return True
+    except ValueError:
+        return False

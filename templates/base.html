@@ -27,11 +27,15 @@
     <title>{% block title %}Healthy Eating for Cancer Survivors{% endblock %}</title>
   </head>
   <body>
-    {% for msg in get_flashed_messages() %}
-      <p class="flash-msg">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for msg in messages %}
+        <p class="flash-msg">
         {{ msg }}
-      </p>
-    {% endfor %}
+        </p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     
     {% block content%}{% endblock %}
   </body>
