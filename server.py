@@ -236,7 +236,7 @@ def process_form_to_db():
         db.session.add(screener)
         db.session.commit()
 
-        if rmeat_days == 0:
+        if pmeat_days == 0:
             #Skip question 8. Update progress tracker
             timestamp = helper.create_timestamp()
             screener_tracker = 9
@@ -324,9 +324,60 @@ def process_form_to_db():
         else:
             flash("Please enter numbers only.")
             return redirect(request.referrer)
+    #Questions 11: Refined Grains Days
+    elif tracker == 11:
+        #Update screener database with form data
+        screener_id = session['screener_id']
+        rgrains_days = int(request.form.get("rgrains_days"))
+        screener = helper.update_screener_q11(screener_id, rgrains_days)
+        db.session.add(screener)
+        db.session.commit()
 
-
-
+        if rgrains_days == 0:
+            #Skip question 12. Update progress tracker to mark completion. Redirect to do calculations.
+            timestamp = helper.create_timestamp()
+            screener_tracker = 13
+            progress = helper.update_progress(screener_id,timestamp,screener_tracker)
+            db.session.add(progress)
+            screener = helper.mark_screener_completion(screener_id, timestamp)
+            db.session.add(screener)
+            db.session.commit()
+            return redirect("/screener-calculations")
+        else:
+            #Redirect to question 12. Update progress tracker.
+            timestamp = helper.create_timestamp()
+            screener_tracker = 12
+            progress = helper.update_progress(screener_id,timestamp,screener_tracker)
+            db.session.add(progress)
+            db.session.commit()
+            return redirect("/screener/12")   
+    
+    #Question 12: Refined Grains Quantity
+    elif tracker == 12:
+        #Get answers from form
+        screener_id = session['screener_id']
+        rgrains_qty = request.form.get("rgrains_qty")
+        #Check if answers are acceptable
+        if helper.is_float(rgrains_qty):
+            #Update screener database with answer
+            screener = helper.update_screener_q12(screener_id, rgrains_qty)
+            db.session.add(screener)
+            db.session.commit()
+            #Update progress tracker
+            timestamp = helper.create_timestamp()
+            screener_tracker = 13
+            progress = helper.update_progress(screener_id,timestamp,screener_tracker)
+            db.session.add(progress)
+            db.session.commit()
+            #Update screener with completion timestamp
+            screener = helper.mark_screener_completion(screener_id, timestamp)
+            db.session.add(screener)
+            db.session.commit()
+            #Redirect to calculations
+            return redirect("/screener-calculations")
+        else:
+            flash("Please enter numbers only.")
+            return redirect(request.referrer)
 
 
 @app.route("/screener-calculations", methods=["POST"])
@@ -414,7 +465,6 @@ def show_dashboard():
     
     return render_template("dashboard.html")
     
-
 @app.route("/dietrec")
 def show_dietary_recs():
     return render_template("dietrec.html")
@@ -427,10 +477,9 @@ def show_fruit_veg_info():
 def show_protein_info():
     return render_template("protein.html")
 
-@app.route("/wholegrain")
+@app.route("/wholegrains")
 def show_whole_grain_info():
-    return render_template("wholegrain.html")
-
+    return render_template("wholegrains.html")
 
 
 if __name__ == "__main__":

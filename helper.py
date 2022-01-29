@@ -56,6 +56,83 @@ def update_screener_q2(screener_id, veg_qty):
 
     return screener
 
+def update_screener_q3(screener_id, fruit_days):
+    """Update answer to Q3 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q3_fruit_days = fruit_days
+
+    return screener
+
+def update_screener_q4(screener_id, fruit_qty):
+    """Update answer to Q4 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q4_fruit_qty = fruit_qty
+
+    return screener
+
+def update_screener_q5(screener_id, rmeat_days):
+    """Update answer to Q5 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q5_rmeat_days = rmeat_days
+
+    return screener
+
+def update_screener_q6(screener_id, rmeat_qty):
+    """Update answer to Q6 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q6_rmeat_qty = rmeat_qty
+
+    return screener
+
+def update_screener_q7(screener_id, pmeat_days):
+    """Update answer to Q7 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q7_pmeat_days = pmeat_days
+
+    return screener
+
+def update_screener_q8(screener_id, pmeat_qty):
+    """Update answer to Q8 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q8_pmeat_qty = pmeat_qty
+
+    return screener
+
+def update_screener_q9(screener_id, wgrains_days):
+    """Update answer to Q9 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q9_wgrains_days = wgrains_days
+
+    return screener
+
+def update_screener_q10(screener_id, wgrains_qty):
+    """Update answer to Q10 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q10_wgrains_qty = wgrains_qty
+
+    return screener
+
+def update_screener_q11(screener_id, rgrains_days):
+    """Update answer to Q11 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q11_rgrains_days = rgrains_days
+
+    return screener
+
+def update_screener_q12(screener_id, rgrains_qty):
+    """Update answer to Q12 to database. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.q12_rgrains_qty = rgrains_qty
+
+    return screener
+
+def mark_screener_completion(screener_id, completed_on):
+    """Update screeners table with completion timestamp. Return screener object."""
+    screener = Screener.query.get(screener_id)
+    screener.completed_on = completed_on
+
+    return screener
+
 def create_progress_tracker(screener_id, timestamp, screener_tracker):
     """Create and return a new progress tracker."""
 
