@@ -133,6 +133,11 @@ def mark_screener_completion(screener_id, completed_on):
 
     return screener
 
+def get_screener_by_user_id(user_id):
+    """Get screener object given user ID. Return screener object."""
+
+    return Screener.query.filter(Screener.user_id == user_id).first()
+
 def create_progress_tracker(screener_id, timestamp, screener_tracker):
     """Create and return a new progress tracker."""
 
@@ -148,6 +153,13 @@ def update_progress(screener_id, timestamp, screener_tracker):
     tracker.screener_tracker = screener_tracker
 
     return tracker
+
+def assign_module(assignment_date, user_id, module_id):
+    """Assign a module to a user."""
+
+    assignment = ModuleAssignment(assignment_date=assignment_date, user_id=user_id, module_id=module_id)
+
+    return assignment
 
 def create_timestamp():
     now = datetime.now()

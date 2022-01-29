@@ -382,31 +382,25 @@ def process_form_to_db():
 
 @app.route("/screener-calculations", methods=["POST"])
 def calculate_cut_offs():
-    fruit_days = request.form.get("fruit_days")
-    fruit_days = int(fruit_days)
-    fruit_qty = request.form.get("fruit_qty")
-    fruit_qty = int(fruit_qty)
-    veg_days = request.form.get("veg_days")
-    veg_days = int(veg_days)
-    veg_qty = request.form.get("veg_qty")
-    veg_qty = int(veg_qty)
-    rmeat_days = request.form.get("rmeat_days")
-    rmeat_days = int(rmeat_days)
-    rmeat_qty = request.form.get("rmeat_qty")
-    rmeat_qty = int(rmeat_qty)
-    pmeat_days = request.form.get("pmeat_days")
-    pmeat_days = int(pmeat_days)
-    pmeat_qty = request.form.get("pmeat_qty")
-    pmeat_qty = int(pmeat_qty)
-    rgrains_days = request.form.get("rgrains_days")
-    rgrains_days = int(rgrains_days)
-    rgrains_qty = request.form.get("rgrains_qty")
-    rgrains_qty = int(rgrains_qty)
-    wgrains_days = request.form.get("wgrains_days")
-    wgrains_days = int(wgrains_days)
-    wgrains_qty = request.form.get("wgrains_qty")
-    wgrains_qty = int(wgrains_qty)
+    #Grab screener object that corresponds to user_id
+    user_id = session['user_id']
+    screener = helper.get_screener_by_user_id(user_id)
 
+    #Assign the variables
+    veg_days = screener.q1_veg_days
+    veg_qty = screener.q2_veg_qty
+    fruit_days = screener.q3_fruit_days
+    fruit_qty = screener.q4_fruit_qty
+    rmeat_days = screener.q5_rmeat_days
+    rmeat_qty = screener.q6_rmeat_qty
+    pmeat_days = screener.q7_pmeat_days
+    pmeat_qty = screener.q8_pmeat_qty
+    wgrains_days = screener.q9_wgrains_days
+    wgrains_qty = screener.q10_wgrains_qty
+    rgrains_days = screener.q11_rgrains_days
+    rgrains_qty = screener.q12_rgrains_qty 
+
+    #Cut-off Calculations
     daily_fruit_intake = fruit_days * fruit_qty / 7
     daily_veg_intake = veg_days * veg_qty / 7
     daily_fv_intake = daily_fruit_intake + daily_veg_intake
@@ -419,17 +413,29 @@ def calculate_cut_offs():
     daily_wgrains_intake = wgrains_days * wgrains_qty / 7
     daily_grain_ratio = daily_wgrains_intake / daily_rgrains_intake
 
-    diet_rec = fruit_veg = red_pro_meat = whole_grains = True
-    
-    if daily_fv_intake >= 5:
-        fruit_veg = False
-    
-    if weekly_red_pro_meat_intake <3:
-        red_pro_meat = False
-    
-    if daily_grain_ratio >=1:
-        whole_grains = False
+    #Create timestamp
+    timestamp = helper.create_timestamp()
 
+    #Module assignment
+    helper.assign_module(timestamp, user_id, module_id)
+    assignment_date = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    module_id = db.Column(db.Integer, db.ForeignKey("modules.module_id"))
+    
+
+    # diet_rec = fruit_veg = red_pro_meat = whole_grains = True
+    
+    # if daily_fv_intake >= 5:
+    #     fruit_veg = False
+    
+    # if weekly_red_pro_meat_intake <3:
+    #     red_pro_meat = False
+    
+    # if daily_grain_ratio >=1:
+    #     whole_grains = False
+
+    #Module assigment to database
+    
     return ("Calculated")
 
 @app.route("/login")
