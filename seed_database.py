@@ -24,9 +24,11 @@ for module in module_data:
     print(module)
     name = module['name']
     description = module['description']
+    href = module['href']
+    img = module['img']
         
     # Create a module
-    new_module= helper.create_module(name, description)
+    new_module= helper.create_module(name, description, href, img)
     modules.append(new_module)
 
     # Add module to database

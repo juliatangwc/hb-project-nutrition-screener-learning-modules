@@ -1,18 +1,26 @@
 [
     {
-        "name": "Dietary Recommendations for Cancer Survivors",
-        "description": "This modules covered details of the two published cancer prevention dietary guidelines by the World Cancer Research Fund and American Cancer Society."
+        "name": "Dietary Recommendations for Cancer Prevention",
+        "description": "This modules covered details of the two published cancer prevention dietary guidelines by the World Cancer Research Fund and American Cancer Society.",
+        "href": "/dietrec",
+        "img": "/static/img/dietrec"
     },
     {
         "name": "Fruit and Vegetables",
-        "description": "This modules covered why cancer survivors need to eat adequate fruit and vegetables, what constitutues one serving of fruit and vegetables, and tips for adding fruits and vegteables to your day."
+        "description": "This modules covered why cancer survivors need to eat adequate fruit and vegetables, what constitutues one serving of fruit and vegetables, and tips for adding fruits and vegteables to your day.",
+        "href": "/fruitveg",
+        "img": "/static/img/fruitveg"
     },
     {
-        "name": "Protein",
-        "description": "This modules covered why cancer survivors need to eat adequate protein, common protein sources, risk of eating too much red and processed meat, how to plan your week to ensure protein intake from a diverse source."
+        "name": "Diversify Your Protein",
+        "description": "This modules covered why cancer survivors need to eat adequate protein, common protein sources, risk of eating too much red and processed meat, how to plan your week to ensure protein intake from a diverse source.",
+        "href": "/protein",
+        "img": "/static/img/protein"
     },
     {
         "name": "Whole Grains",
-        "description": "This modules covered the importance of eating whole grains instead of refined grains, common whole and refined grain sources, tips of incoporating whole grains in your diet."
+        "description": "This modules covered the importance of eating whole grains instead of refined grains, common whole and refined grain sources, tips of incoporating whole grains in your diet.",
+        "href": "/wholegrains",
+        "img": "/static/img/wholegrains"
     }
 ]

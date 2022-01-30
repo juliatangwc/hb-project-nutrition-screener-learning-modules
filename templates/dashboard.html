@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Healthy Eating for Cancer Survivors{% endblock %}
 {% block content%}
+<h1>Welcome, {{name}}.</h1>
 <h1>Dashboard</h1>
-<a href="/dietrec">Dietary Recommendations for Cancer Prevention</a>
-<a href="/fruitveg">Fruits and Vegetables</a>
-<a href="/protein">Diversify Your Protein</a>
-<a href="/wholegrains">Whole Grains</a>
+<ul id="modules"></ul>
+{% for module in assigned_modules %}
+<li><a href="{{ module.href }}">{{ module.name }}</a></li>
+{%endfor %}
 
 {% endblock %}

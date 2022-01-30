@@ -80,7 +80,7 @@ def process_form_to_db():
             flash (f"Account created.")
             return redirect("/screener/1")
     
-    #Question 1: Veg_days
+    #Question 1: Vegetables days
     elif tracker == 1:
         #Update screener database with form data
         screener_id = session['screener_id']
@@ -90,7 +90,10 @@ def process_form_to_db():
         db.session.commit()
 
         if veg_days == 0:
-            #Skip question 2. Update progress tracker
+            #Skip question 2. Q2 defaults to 2. Update progress tracker
+            veg_qty = 0
+            screener = helper.update_screener_q2(screener_id, veg_qty)
+            db.session.add(screener)
             timestamp = helper.create_timestamp()
             screener_tracker = 3
             progress = helper.update_progress(screener_id,timestamp,screener_tracker)
@@ -106,7 +109,7 @@ def process_form_to_db():
             db.session.commit()
             return redirect("/screener/2")
 
-    #Question 2: Veg qty
+    #Question 2: Vegetables quantity
     elif tracker == 2:
         #Get answers from form
         screener_id = session['screener_id']
@@ -139,7 +142,10 @@ def process_form_to_db():
         db.session.commit()
 
         if fruit_days == 0:
-            #Skip question 4. Update progress tracker
+            #Skip question 4. Q4 defaults to 0. Update progress tracker
+            fruit_qty = 0
+            screener = helper.update_screener_q4(screener_id, fruit_qty)
+            db.session.add(screener)
             timestamp = helper.create_timestamp()
             screener_tracker = 5
             progress = helper.update_progress(screener_id,timestamp,screener_tracker)
@@ -188,7 +194,10 @@ def process_form_to_db():
         db.session.commit()
 
         if rmeat_days == 0:
-            #Skip question 6. Update progress tracker
+            #Skip question 6. Q6 defaults to 0. Update progress tracker
+            rmeat_qty = 0
+            screener = helper.update_screener_q6(screener_id, rmeat_qty)
+            db.session.add(screener)
             timestamp = helper.create_timestamp()
             screener_tracker = 7
             progress = helper.update_progress(screener_id,timestamp,screener_tracker)
@@ -237,7 +246,10 @@ def process_form_to_db():
         db.session.commit()
 
         if pmeat_days == 0:
-            #Skip question 8. Update progress tracker
+            #Skip question 8. Q8 defaults to 0. Update progress tracker
+            pmeat_qty = 0
+            screener = helper.update_screener_q8(screener_id, pmeat_qty)
+            db.session.add(screener)
             timestamp = helper.create_timestamp()
             screener_tracker = 9
             progress = helper.update_progress(screener_id,timestamp,screener_tracker)
@@ -286,7 +298,10 @@ def process_form_to_db():
         db.session.commit()
 
         if wgrains_days == 0:
-            #Skip question 10. Update progress tracker
+            #Skip question 10. Q10 defaults to 0. Update progress tracker
+            wgrains_qty = 0
+            screener = helper.update_screener_q10(screener_id, wgrains_qty)
+            db.session.add(screener)
             timestamp = helper.create_timestamp()
             screener_tracker = 11
             progress = helper.update_progress(screener_id,timestamp,screener_tracker)
@@ -334,7 +349,10 @@ def process_form_to_db():
         db.session.commit()
 
         if rgrains_days == 0:
-            #Skip question 12. Update progress tracker to mark completion. Redirect to do calculations.
+            #Skip question 12. Q12 defaults to 0. Update progress tracker to mark completion. Redirect to do calculations.
+            rgrains_qty = 0
+            screener = helper.update_screener_q12(screener_id, rgrains_qty)
+            db.session.add(screener)
             timestamp = helper.create_timestamp()
             screener_tracker = 13
             progress = helper.update_progress(screener_id,timestamp,screener_tracker)
@@ -380,7 +398,7 @@ def process_form_to_db():
             return redirect(request.referrer)
 
 
-@app.route("/screener-calculations", methods=["POST"])
+@app.route("/screener-calculations")
 def calculate_cut_offs():
     #Grab screener object that corresponds to user_id
     user_id = session['user_id']
@@ -411,32 +429,35 @@ def calculate_cut_offs():
 
     daily_rgrains_intake = rgrains_days * rgrains_qty / 7
     daily_wgrains_intake = wgrains_days * wgrains_qty / 7
-    daily_grain_ratio = daily_wgrains_intake / daily_rgrains_intake
+    daily_grain_ratio = daily_wgrains_intake / daily_rgrains_intake if daily_rgrains_intake != 0 else 1
 
     #Create timestamp
     timestamp = helper.create_timestamp()
+    
+    #Assignment logic
+    #Everyone gets module 1 on dietary recommendations
+    module1 = helper.assign_module(timestamp, user_id, 1)
+    db.session.add(module1)
 
-    #Module assignment
-    helper.assign_module(timestamp, user_id, module_id)
-    assignment_date = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    module_id = db.Column(db.Integer, db.ForeignKey("modules.module_id"))
+    #If daily fv intake is less than 5, assign module 2 on fruit and veg
+    if daily_fv_intake <5: 
+        module2 = helper.assign_module(timestamp, user_id, 2)
+        db.session.add(module2)
     
+    #If weekly red/processed meat intake is larger than 3, assign module 3 on protein
+    if weekly_red_pro_meat_intake > 3:
+        module3 = helper.assign_module(timestamp, user_id, 3)
+        db.session.add(module3)
 
-    # diet_rec = fruit_veg = red_pro_meat = whole_grains = True
-    
-    # if daily_fv_intake >= 5:
-    #     fruit_veg = False
-    
-    # if weekly_red_pro_meat_intake <3:
-    #     red_pro_meat = False
-    
-    # if daily_grain_ratio >=1:
-    #     whole_grains = False
+    #If daily whole grain ratio is less than 1, meaning less than half is whole grain, assign module 4 on whole grains
+    if daily_grain_ratio < 1:
+        module4 = helper.assign_module(timestamp, user_id, 4)
+        db.session.add(module4)
 
-    #Module assigment to database
+    #Write to database
+    db.session.commit()
     
-    return ("Calculated")
+    return redirect("/dashboard")
 
 @app.route("/login")
 def show_login_form():
@@ -458,18 +479,47 @@ def user_login():
         if checked_user:
             session['user_id'] = checked_user
             flash ("Success! You are logged in!")
+            user_id = session['user_id']
+            screener_id = helper.get_most_updated_screener_id(user_id) #this will return 0 if none started
+            if screener_id == 0:
+                #Start a new screener
+                screener = helper.create_initial_screener(user_id)
+                db.session.add(screener)
+                db.session.commit()
+                screener_id = screener.screener_id
+                session['screener_id'] = screener_id
+                timestamp = helper.create_timestamp()
+                #Create progress tracker
+                screener_tracker = 1
+                progress = helper.create_progress_tracker(screener_id, timestamp, screener_tracker)
+                db.session.add(progress)
+                db.session.commit()
+                #Redirect to question 1
+                return redirect("/screener/1")
+            else:
+                progress = helper.get_screener_tracker(screener_id)
+                if progress.screener_tracker == 13:
+                    return redirect("/dashboard")
+                else:
+                    return redirect(f"/screener/{progress.screener_tracker}")
         else:
             flash ("Wrong password. Please try again.")
+            return redirect(request.referrer)
     else:
         flash ("No match for email entered. Please create an account.")
-    
-    return redirect ("/dashboard")
+        return redirect("/screener/0")
     
 
 @app.route("/dashboard")
 def show_dashboard():
-    
-    return render_template("dashboard.html")
+    user_id = session['user_id']
+    #Get user's name
+    user = helper.get_user_by_id(user_id)
+    name = user.name
+    #Get all assigned modules for user by user ID
+    assigned_modules = helper.get_all_assigned_modules_by_user(user_id)
+
+    return render_template("dashboard.html", name=name, assigned_modules=assigned_modules)
     
 @app.route("/dietrec")
 def show_dietary_recs():

@@ -28,10 +28,26 @@ def check_user_password(email, password):
     else:
         return False
 
-def create_module(name, description):
+def get_user_by_id(user_id):
+    """Return a user object by user ID."""
+    
+    return User.query.get(user_id)
+    
+def get_most_updated_screener_id(user_id):
+    """Find all screeners done by user by user ID. Return the most updated screener ID."""
+    screeners = Screener.query.filter_by(user_id=user_id).all()
+    most_updated = 0
+
+    for screener in screeners:
+        if screener.screener_id > most_updated:
+            most_updated = screener.screener_id
+    
+    return most_updated
+
+def create_module(name, description, href, img):
     """Create and return a new module."""
 
-    module = Module(name=name, description=description)
+    module = Module(name=name, description=description, href=href, img=img)
 
     return module
 
@@ -154,12 +170,28 @@ def update_progress(screener_id, timestamp, screener_tracker):
 
     return tracker
 
+def get_screener_tracker(screener_id):
+    """Find progress tracker by screener ID. Return progress object."""
+    
+    return Progress.query.filter_by(screener_id=screener_id).first()
+
 def assign_module(assignment_date, user_id, module_id):
     """Assign a module to a user."""
 
     assignment = ModuleAssignment(assignment_date=assignment_date, user_id=user_id, module_id=module_id)
 
     return assignment
+
+def get_all_assigned_modules_by_user(user_id):
+    """Find all modules assigned to user. Return a list of asssigned modules as objects."""
+    
+    assigned_modules = []
+    assignments = ModuleAssignment.query.filter_by(user_id=user_id)
+
+    for assignment in assignments:
+        assigned_modules.append(assignment.module)
+    
+    return assigned_modules
 
 def create_timestamp():
     now = datetime.now()

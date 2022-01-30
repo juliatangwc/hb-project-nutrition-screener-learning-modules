@@ -102,6 +102,8 @@ class Module(db.Model):
                         primary_key=True)
     name = db.Column(db.String, unique=False, nullable=False)
     description = db.Column(db.Text)
+    href = db.Column(db.String, unique=True, nullable=False)
+    img = db.Column(db.String)
 
     assignment = db.relationship('ModuleAssignment', back_populates="module")
  
