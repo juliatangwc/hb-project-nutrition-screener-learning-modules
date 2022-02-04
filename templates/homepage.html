@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}Healthy Eating for Cancer Survivors{% endblock %}
 {% block content%}
-<h1>Welcome</h1>
-<h2>Healthy Eating for Cancer Survivors</h2>
-<form>
-    <button type="submit" value="new_user" formaction="/screener/0">New User</button>
-    <button type="submit" value="existing_user" formaction="/login">Existing User</button>
-</form>
+<div class = "container-fluid">
+    <div class = "row">
+        <div class = "col text-center">
+            <h1>Welcome</h1>
+            <h2>Healthy Eating for Cancer Prevention</h2>
+            <br>
+            <form>
+                <button class = "btn btn-secondary" type="submit" value="new_user" formaction="/screener/0">New User</button>
+                <button class = "btn btn-secondary" type="submit" value="existing_user" formaction="/login">Existing User</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

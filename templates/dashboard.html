@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}Healthy Eating for Cancer Survivors{% endblock %}
 {% block content%}
-<h1>Welcome, {{name}}.</h1>
-<h1>Dashboard</h1>
-<ul id="modules"></ul>
-{% for module in assigned_modules %}
-<li><a href="{{ module.href }}">{{ module.name }}</a></li>
-{%endfor %}
+<div class = "container-fluid">
+    <div class = "row">
+        <div class = "col text-center">
+            <h1>Welcome, {{name}}.</h1>
+            <h1>Dashboard</h1>
+        </div>
+    </div>
+    <div class = "row">
+        {% for module in assigned_modules %}
+        <div class = "col module">
+            <a href="{{ module.href }}">{{ module.name }}</a>
+        </div>
+        {%endfor %}    
+    </div>
+</div>
+
+
+
+
+
 
 {% endblock %}

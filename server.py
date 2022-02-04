@@ -512,14 +512,18 @@ def user_login():
 
 @app.route("/dashboard")
 def show_dashboard():
-    user_id = session['user_id']
-    #Get user's name
-    user = helper.get_user_by_id(user_id)
-    name = user.name
-    #Get all assigned modules for user by user ID
-    assigned_modules = helper.get_all_assigned_modules_by_user(user_id)
+    if session.get('user_id',None) != None:
+        user_id = session['user_id']
+        #Get user's name
+        user = helper.get_user_by_id(user_id)
+        name = user.name
+        #Get all assigned modules for user by user ID
+        assigned_modules = helper.get_all_assigned_modules_by_user(user_id)
 
-    return render_template("dashboard.html", name=name, assigned_modules=assigned_modules)
+        return render_template("dashboard.html", name=name, assigned_modules=assigned_modules)
+    else:
+        flash("Please log in to access modules.")
+        return redirect("/login")
     
 @app.route("/dietrec")
 def show_dietary_recs():
@@ -536,6 +540,11 @@ def show_protein_info():
 @app.route("/wholegrains")
 def show_whole_grain_info():
     return render_template("wholegrains.html")
+
+@app.route("/logout")
+def log_out():
+    session.clear()
+    return redirect("/")
 
 
 if __name__ == "__main__":
