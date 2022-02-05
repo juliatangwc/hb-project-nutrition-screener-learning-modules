@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}Healthy Eating for Cancer Prevention{% endblock %}
+
 {% block content%}
 <div class = "container-fluid">
     <div class = "row">
         <div class = "col text-center">
-            <h1>Welcome, {{name}}.</h1>
-            <h1>Dashboard</h1>
+            <h2>Welcome, {{name}}.</h2>
+            <h3>Thanks for completing the screener. Here are your assigned modules.</h3>
+            <br>
         </div>
     </div>
     <div class = "row">
         {% for module in assigned_modules %}
-        <div class = "col module">
-            <a href="{{ module.href }}">{{ module.name }}</a>
+        <div class = "col module d-flex justify-content-center text-center">
+            <a href="{{ module.href }}"><img src ="{{module.img}}" height=200 width=200><br>{{ module.name }}</a>
         </div>
         {%endfor %}    
     </div>

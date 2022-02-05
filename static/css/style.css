@@ -5,3 +5,15 @@
 .navbar-brand {
   margin-left: 2rem
 }
+
+.logout {
+  margin-right: 2rem
+}
+
+table {
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid black;
+}

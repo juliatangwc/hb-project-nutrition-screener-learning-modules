@@ -512,7 +512,7 @@ def user_login():
 
 @app.route("/dashboard")
 def show_dashboard():
-    if session.get('user_id',None) != None:
+    if session.get('user_id', None) != None:
         user_id = session['user_id']
         #Get user's name
         user = helper.get_user_by_id(user_id)
