@@ -11,7 +11,7 @@
     </div>
     <div class = "row">
         {% for module in assigned_modules %}
-        <div class = "col module d-flex justify-content-center text-center">
+        <div class = "col d-flex justify-content-center text-center">
             <a href="{{ module.href }}"><img src ="{{module.img}}" height=200 width=200><br>{{ module.name }}</a>
         </div>
         {%endfor %}    
