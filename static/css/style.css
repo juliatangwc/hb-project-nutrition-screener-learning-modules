@@ -10,22 +10,30 @@
   }
 
 .navbar-brand {
-  margin-left: 2rem
+  margin-left: 2rem;
 }
 
-.navbar-collapse {
- 
+.nav-link {
+  display: inline-flex;
+}
+
+.navbar-collapse.collapsing,
+.navbar-collapse.show {
+    margin-left: 2rem;
 }
 
 #logout {
-  margin-right: 2rem
+  margin-right:2rem
 }
 
 #toggler {
   margin-right: 2rem
+} 
+
+.btn-light:hover {
+  background-color: #909091;
+  border-color: #020202;
 }
-
-
 
 table {
   width: 100%;
