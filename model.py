@@ -18,6 +18,7 @@ class User(db.Model):
 
     screener = db.relationship('Screener', back_populates="user")
     assignment = db.relationship('ModuleAssignment', back_populates="user")
+    score = db.relationship('Score', back_populates="user")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} name={self.name} email={self.email}>"
@@ -106,10 +107,31 @@ class Module(db.Model):
     img = db.Column(db.String)
 
     assignment = db.relationship('ModuleAssignment', back_populates="module")
+    score = db.relationship('Score', back_populates="module")
  
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
+
+class Score(db.Model):
+    """A record to track score for module quizzes."""
+
+    __tablename__ = 'scores'
+
+    score_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    score_date = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    module_id = db.Column(db.Integer, db.ForeignKey("modules.module_id"))
+    score = db.Column(db.Integer)
+    
+    user = db.relationship('User', back_populates="score")
+    module = db.relationship('Module', back_populates="score")
+
+    def __repr__(self):
+        return f"""<Score score_id={self.score_id} user_id={self.user_id}
+                    module_id={self.module_id} score={self.score}>"""
 
 def connect_to_db(flask_app, db_uri="postgresql:///diet-screener", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
