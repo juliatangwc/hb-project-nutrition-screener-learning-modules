@@ -1,6 +1,6 @@
 """Helper functions."""
 
-from model import db, User, Screener, Progress, ModuleAssignment, Module, connect_to_db
+from model import db, User, Screener, Progress, ModuleAssignment, Module, Score, connect_to_db
 from datetime import datetime
 
 def create_user(email, password, name):

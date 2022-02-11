@@ -3,6 +3,7 @@ from datetime import datetime
 
 from model import connect_to_db, db
 import helper
+import m1_dietrec
 
 from jinja2 import StrictUndefined
 
@@ -528,6 +529,15 @@ def show_dashboard():
 @app.route("/dietrec")
 def show_dietary_recs():
     return render_template("dietrec.html")
+
+@app.route("/dietrec-quiz")
+def show_dietrec_quiz():
+    return m1_dietrec.generate_questions()
+
+
+@app.route("/dietrec-quiz",methods=["POST"])
+def check_dietrec_quiz_answer():
+    pass
 
 @app.route("/fruitveg")
 def show_fruit_veg_info():
