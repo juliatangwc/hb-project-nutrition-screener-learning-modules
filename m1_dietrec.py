@@ -2,7 +2,7 @@
 
 from model import db, User, Module, Score, connect_to_db
 from datetime import datetime
-from random import choices
+from random import sample
 import json
 
 module1_questions = {
@@ -15,7 +15,33 @@ module1_questions = {
     7 : '<p>Choosing poultry, fish, or <input type="text" class="answer-box" id="m1q7">-based protein such as tofu is a good idea.</p>',
     8 : '<p>I ought to avoid <input type="text" class="answer-box" id="m1q8"> meat like sausages and ham.</p>',
     9 : '<p>Drinks like soda and lemonade contain added <input type="text" class="answer-box" id="m1q9">, which means they are empty calories (not providing nutrients).</p>',
-    10 : '<p>Drinking plenty of <input type="text" class="answer-box" id="m1q10"> (at least 8 cups per day) swill help keep me healthy.</p>'
+    10 : '<p>Drinking plenty of <input type="text" class="answer-box" id="m1q10"> (at least 8 cups per day) will help keep me healthy.</p>'
+}
+
+module1_answer_key = {
+    1 : ['can'],
+    2 : ['no'],
+    3 : ['5','five'],
+    4 : ['1','one'],
+    5 : ['whole'],
+    6 : ['red meat'],
+    7 : ['plant'],
+    8 : ['processed'],
+    9 : ['sugar'],
+    10 : ['water']
+}
+
+module1_correct_answers = {
+    1 : '<p>A healthy lifestyle can lower the risk of cancer.</p>',
+    2 : '<p>There are no special food that can prevent cancer.</p>',
+    3 : '<p>Every day, I should consume at least 5 servings of fruit and vegetables.</p>',
+    4 : '<p>One serving of vegetable is one bowl of raw vegetables or half a bowl of cooked vegetables.</p>',
+    5 : '<p>I should choose whole grain products like brown rice over refined grain products like white rice.</p>',
+    6 : '<p>I should not eat too much red meat, such as pork, beef and lamb.</p>',
+    7 : '<p>Choosing poultry, fish, or plant-based protein such as tofu is a good idea.</p>',
+    8 : '<p>I ought to avoid processed meat like sausages and ham.</p>',
+    9 : '<p>Drinks like soda and lemonade contain added sugar, which means they are empty calories (not providing nutrients).</p>',
+    10 : '<p>Drinking plenty of water (at least 8 cups per day) will help keep me healthy.</p>'
 }
 
 def generate_questions():
@@ -23,14 +49,28 @@ def generate_questions():
         Return json with html of the 3 questions."""
     
     questions = {}
-    numbers = choices(range(1,11), k=3)
+    numbers = sample(range(1,11), 3)
     
     for n in numbers:
         questions[n] = module1_questions[n]
     
     return json.dumps(questions)
 
-        
+def check_answers(answers):
+    """Receive input as json.
+        Check answers against answer key.
+        Return responses based on correctness of answers."""
+    for answer in answers:
+        print(answers[answer])
+        if answers[answer] != None:
+            if answers[answer] in module1_answer_key[answer]:
+                answers[answer] = "Correct!"
+            else:
+                answers[answer] = f"<p>The correct answer is:</p> {module1_correct_answers[answer]}"
+    
+    return answers
+
+ 
 
 
 

@@ -536,8 +536,12 @@ def show_dietrec_quiz():
 
 
 @app.route("/dietrec-quiz",methods=["POST"])
-def check_dietrec_quiz_answer():
-    pass
+def check_dietrec_quiz_answers():
+    answers = request.json
+    print(answers, "***********")
+    data = {int(k): v for k, v in answers.items()}
+    print(data)
+    return m1_dietrec.check_answers(data)
 
 @app.route("/fruitveg")
 def show_fruit_veg_info():
