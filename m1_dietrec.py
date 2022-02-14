@@ -1,5 +1,5 @@
 """Module 1 Quiz Functions"""
-
+from flask import Flask, session
 from model import db, User, Module, Score, connect_to_db
 from datetime import datetime
 from random import sample
@@ -32,16 +32,16 @@ module1_answer_key = {
 }
 
 module1_correct_answers = {
-    1 : '<p>A healthy lifestyle can lower the risk of cancer.</p>',
-    2 : '<p>There are no special food that can prevent cancer.</p>',
-    3 : '<p>Every day, I should consume at least 5 servings of fruit and vegetables.</p>',
-    4 : '<p>One serving of vegetable is one bowl of raw vegetables or half a bowl of cooked vegetables.</p>',
-    5 : '<p>I should choose whole grain products like brown rice over refined grain products like white rice.</p>',
-    6 : '<p>I should not eat too much red meat, such as pork, beef and lamb.</p>',
-    7 : '<p>Choosing poultry, fish, or plant-based protein such as tofu is a good idea.</p>',
-    8 : '<p>I ought to avoid processed meat like sausages and ham.</p>',
-    9 : '<p>Drinks like soda and lemonade contain added sugar, which means they are empty calories (not providing nutrients).</p>',
-    10 : '<p>Drinking plenty of water (at least 8 cups per day) will help keep me healthy.</p>'
+    1 : 'A healthy lifestyle can lower the risk of cancer.',
+    2 : 'There are no special food that can prevent cancer.',
+    3 : 'Every day, I should consume at least 5 servings of fruit and vegetables.',
+    4 : 'One serving of vegetable is one bowl of raw vegetables or half a bowl of cooked vegetables.',
+    5 : 'I should choose whole grain products like brown rice over refined grain products like white rice.',
+    6 : 'I should not eat too much red meat, such as pork, beef and lamb.',
+    7 : 'Choosing poultry, fish, or plant-based protein such as tofu is a good idea.',
+    8 : 'I ought to avoid processed meat like sausages and ham.',
+    9 : 'Drinks like soda and lemonade contain added sugar, which means they are empty calories (not providing nutrients).',
+    10 : 'Drinking plenty of water (at least 8 cups per day) will help keep me healthy.'
 }
 
 def generate_questions():
@@ -60,14 +60,24 @@ def check_answers(answers):
     """Receive input as json.
         Check answers against answer key.
         Return responses based on correctness of answers."""
+    #Set score to 0
+    answers['score'] = 0
+
+    #Check answers. Return correct answer if answer is incorrect. 
+    #If question was not assigned, answer will be None.
+    #Correct answer will increase score by 1. 
     for answer in answers:
-        print(answers[answer])
         if answers[answer] != None:
             if answers[answer] in module1_answer_key[answer]:
-                answers[answer] = "Correct!"
+                answers[answer] = "<p class='correct-answer'>Correct!</p>"
+                answer['score'] += 1
             else:
-                answers[answer] = f"<p>The correct answer is:</p> {module1_correct_answers[answer]}"
+                answers[answer] = f"<p class='wrong-answer'>Incorrect! <br> The correct answer is: {module1_correct_answers[answer]} </p>"
     
+    #Write score to db
+
+
+
     return answers
 
  

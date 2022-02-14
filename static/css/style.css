@@ -42,3 +42,11 @@ table {
 table, th, td {
   border: 1px solid black;
 }
+
+.correct-answer {
+  background-color: lightgreen
+}
+
+.wrong-answer {
+  background-color: lightpink
+}

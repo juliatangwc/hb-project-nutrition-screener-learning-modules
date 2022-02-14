@@ -16,7 +16,7 @@ fetch('/dietrec-quiz')
     .then(data => {
             const questions = data;
             for (const question in questions) {
-                document.querySelector('#question-box').insertAdjacentHTML ('beforeend', `<li id=${question}>${questions[question]}</li>`)
+                document.querySelector('#question-box').insertAdjacentHTML ('beforeend', `<li id="li${question}">${questions[question]}</li>`)
             };
     });
 
@@ -55,7 +55,7 @@ quiz.addEventListener('submit', evt => {
         console.log(data);
         for (const item in data){
             if (data[item] !== null) {
-                document.querySelector(`#${item}`).insertAdjacentHTML ('beforeend', `<br>${data[item]}`)
+                document.querySelector(`#li${item}`).insertAdjacentHTML ('beforeend', `<br>${data[item]}<br>`)
             };
         };  
     })
