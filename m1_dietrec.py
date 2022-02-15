@@ -89,8 +89,6 @@ def check_answers(answers):
     #Check if completed date exists for module assignment.
     #If not, set timestamp
     assignment = helper.get_assigned_module(user_id, module_id)
-    print (assignment)
-    print(assignment.completion_date)
 
     if assignment.completion_date is None:
         assignment.completion_date = timestamp
