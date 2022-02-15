@@ -193,6 +193,19 @@ def get_all_assigned_modules_by_user(user_id):
     
     return assigned_modules
 
+def get_assigned_module(user_id, module_id):
+
+    assignment = ModuleAssignment.query.filter(ModuleAssignment.user_id==user_id, ModuleAssignment.module_id==module_id).first()
+
+    return assignment
+
+def set_score(timestamp, user_id, module_id, score):
+    """Create and return a new score record."""
+
+    score = Score(score_date=timestamp, user_id=user_id, module_id=module_id, score=score)
+
+    return score
+
 def create_timestamp():
     now = datetime.now()
     timestamp = now.strftime("%Y/%m/%d %H:%M:%S")

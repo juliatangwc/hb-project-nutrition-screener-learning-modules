@@ -3,7 +3,10 @@ from flask import Flask, session
 from model import db, User, Module, Score, connect_to_db
 from datetime import datetime
 from random import sample
+
 import json
+
+import helper
 
 module1_questions = {
     1 : '<p>A healthy lifestyle <input type="text" class="answer-box" id="m1q1"> (can/cannot) lower the risk of cancer.</p>',
@@ -61,7 +64,7 @@ def check_answers(answers):
         Check answers against answer key.
         Return responses based on correctness of answers."""
     #Set score to 0
-    answers['score'] = 0
+    score = 0
 
     #Check answers. Return correct answer if answer is incorrect. 
     #If question was not assigned, answer will be None.
@@ -70,15 +73,32 @@ def check_answers(answers):
         if answers[answer] != None:
             if answers[answer] in module1_answer_key[answer]:
                 answers[answer] = "<p class='correct-answer'>Correct!</p>"
-                answer['score'] += 1
+                score += 1
             else:
                 answers[answer] = f"<p class='wrong-answer'>Incorrect! <br> The correct answer is: {module1_correct_answers[answer]} </p>"
     
     #Write score to db
+    answers['score'] = score
+    timestamp = helper.create_timestamp()
+    user_id = session['user_id']
+    module_id = 1
+    new_score_record = helper.set_score(timestamp, user_id, module_id, score)
+    db.session.add(new_score_record)
+    db.session.commit()
+    
+    #Check if completed date exists for module assignment.
+    #If not, set timestamp
+    assignment = helper.get_assigned_module(user_id, module_id)
+    print (assignment)
+    print(assignment.completion_date)
 
+    if assignment.completion_date is None:
+        assignment.completion_date = timestamp
+    
+    db.session.add(assignment)
+    db.session.commit()
 
-
-    return answers
+    return json.dumps(answers)
 
  
 

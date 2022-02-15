@@ -59,13 +59,6 @@ quiz.addEventListener('submit', evt => {
             };
         };  
     })
-        // document.querySelector('#question-box').insertAdjacentHTML ('beforeend', data)
-        //if it is not null, then put it under the answer box.
-        // for (const item in data){
-        //     if (data[item] !== null) {
-        //         document.querySelector(`${item}`).insertAdjacentHTML ('beforeend', `<br>${data[item]}`)
-        //     };
-        // };
 });
 
 
