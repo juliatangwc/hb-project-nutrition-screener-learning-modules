@@ -43,6 +43,11 @@ table, th, td {
   border: 1px solid black;
 }
 
+#score-display {
+  text-align: center;
+  background-color: lightyellow
+}
+
 .correct-answer {
   background-color: lightgreen
 }
