@@ -55,3 +55,18 @@ table, th, td {
 .wrong-answer {
   background-color: lightpink
 }
+
+.wrapper{
+  justify-content:center;
+}
+
+.food-item {
+  max-width: 20%;
+  margin: 0.5rem;
+  display: inline-block
+}
+
+.food-img{
+  height: 12rem;
+  width: 100%;
+}
