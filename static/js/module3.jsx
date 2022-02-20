@@ -20,9 +20,8 @@ const Quiz = props => {
     }
     // For each number, use info in object to initialize a foodList div
     for(const num of nums){
-        const info = foodList[num.toString()]
-        <FoodItem props={info}/>
-
+        const info = foodList[num]
+        <FoodItem info={info}/>
     }
 
     return(
