@@ -44,5 +44,22 @@
         </div>
     </div>
 </div>
+<div class="container-fluid" id="quiz">
+    <div class = "row">
+        <div class = "col text-center">
+            <h3>Quiz</h3>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col">
+            <p id="score-display"></p>
+            <form id="wholegrains-quiz" action="/wholegrains-quiz" method="POST">
+                <ol id="question-box"></ol>
+                <br>
+                <button type="button" class="btn btn-secondary" id="submit-button">Submit</button>
+            </form>
+            <script src="/static/js/module4.js"></script>
+    </div>
+</div>
 
 {% endblock %}
