@@ -3,7 +3,7 @@ from datetime import datetime
 
 from model import connect_to_db, db
 import helper
-import m1_dietrec
+import m1_dietrec, m4_wholegrains
 
 from jinja2 import StrictUndefined
 
@@ -552,6 +552,16 @@ def show_protein_info():
 @app.route("/wholegrains")
 def show_whole_grain_info():
     return render_template("wholegrains.html")
+
+@app.route("/wholegrains-quiz")
+def show_wholegrains_quiz():
+    return m4_wholegrains.generate_questions()
+
+@app.route("/wholegrains-quiz",methods=["POST"])
+def check_wholegrains_quiz_answers():
+    answers = request.json
+    data = {int(k): v for k, v in answers.items()}
+    return m4_wholegrains.check_answers(data)
 
 @app.route("/logout")
 def log_out():
