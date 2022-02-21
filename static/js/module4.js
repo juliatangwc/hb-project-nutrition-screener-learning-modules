@@ -2,27 +2,63 @@
 
 //Module 4 Quiz
 //Whole Grains
-//Sorting
+//Sorting into the correct boxes
 
-//A total of 12 possible items (currently hard coded as dictionary in m1_dietrec.py)
-//Randomize to show 3 each time (generate_question in m1_dietrec.py)
+//A total of 12 possible items (currently hard coded as dictionary in m4_wholegrains.py)
+//Randomize to show 4 each time (generate_question in m4_wholegrains.py)
 //Submit button
+
 //On submit, send post request to route
 //Server will do answer check and post score to db
 //Display score and correct answers
 //Try again button
 
-//Fetch request for getting quiz questions
+//Fetch request for getting food items
 fetch('/wholegrains-quiz')
     .then(response => response.json())
     .then(data => {
             const questions = data;
             for (const question in questions) {
-                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div id="item${question}">${questions[question]}</div>`)
+                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div id="item${question}" draggable="true">${questions[question]}</div>`)
             };
     });
 
-// //Post request for sending answers and getting results 
+//Add functions for drag and drop
+function dragstart_handler(ev) {
+    // Add the target element's id to the data transfer object
+    ev.dataTransfer.setData("text/plain", ev.target.id);
+    ev.dataTransfer.setData("text/html", ev.target.outerHTML);
+    ev.dataTransfer.dropEffect = "move";
+  }
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    //Get elements under fooditems div with id starting with item
+    const matches = [];
+    const elements = document.getElementById("fooditems").children;
+    for(var i = 0; i < elements.length; i++) {
+        if(elements[i].id.indexOf('item') == 0) {
+            matches.push(elements[i]);
+        }
+    }
+    //For matching elements, add them to ondragstart event listener
+    for (const match in matches){
+        match.addEventListener("dragstart", dragstart_handler);
+    }
+  });
+
+function dragover_handler(ev) {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = "move";
+   }
+function drop_handler(ev) {
+    ev.preventDefault();
+    // Get the id of the target and add the moved element to the target's DOM
+    const data = ev.dataTransfer.getData("text/html");
+    ev.target.appendChild(document.getElementById(data));
+   }
+
+   // Post request for sending answers and getting results 
 // const quiz = document.querySelector('#dietrec-quiz')
 // const button = document.querySelector('#submit-button');
    

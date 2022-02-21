@@ -12,41 +12,59 @@ const foodList = {  1: {'name':'chicken','img':'/static/img/protein-quiz/chicken
                     12: {'name':'milk','img':'static/img/protein-quiz/milk.jpg','correct':'True'}
                 }
 
-const Quiz = props => {
+const Quiz = () => {
     // Generate a list of 5 random number
-    const nums = new Set();
-    while(nums.size !== 5) {
-        nums.add(Math.floor(Math.random() * foodList.length));
+    let nums = new Set();
+    while (nums.size !== 5) {
+        nums.add(Math.floor(Math.random() * Object.keys(foodList).length));
     };
     console.log(nums)
+    
     // Empty list to hold all food item divs
     const foodItemDivs = [];
 
     // For each number, use info in object to initialize a foodList div
     for(const num of nums){
         const foodObj = foodList[num]
+        console.log(foodObj, 'foodObj')
         
         foodItemDivs.push(
-        <FoodItem {...foodObj}/>
-        )   
+            <FoodItem {...foodObj}/>
+        )
+        console.log(foodItemDivs, 'foodItemDivs')   
     };
+
+    const handleClick = () => {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({obj})
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+    }
     
+    console.log('react is working')
+
     return(
         <div className="quiz-wrapper">
             {foodItemDivs}
+            <button onClick={handleClick} />
         </div>
     )
 }
 
-const FoodItem = props => {
+const FoodItem = (props) => {
     const { name, img, correct } = props;
-    const [display, setDisplay] = React.useState('None');
+    const [display, setDisplay] = React.useState(false);
     
     let numWrong = 0;
 
     const showAnswer = () => {
-        setDisplay = 'Block';
-        if ({correct}!=='True'){
+        setDisplay(true);
+        if (correct !== 'True') {
             numWrong += 1;
         }
     }
@@ -55,16 +73,19 @@ const FoodItem = props => {
         <div className="food-item" id={name} onClick={showAnswer}>
             <img className="food-img" src={img}/>
             <h5>{name}</h5>
+            <Answer code={name} correctAnswer={correct} display={display ? 'block' : 'none'}/>
         </div>
     )
 };
 
-const Answer = props => {
-    const {code, correctAnwer} = props;
+const Answer = (props) => {
+    const {code, correctAnswer, display} = props;
 
-    return(<div className="answer" id={code} display={display}>
-        <p>{correctAnswer}</p>
-    </div>)
+    return(
+        <div className="answer" id={code} style={{ 'display': display }}>
+            <p>{correctAnswer}</p>
+        </div>
+    )
 }
 
 ReactDOM.render(<Quiz />, document.querySelector('#root'));

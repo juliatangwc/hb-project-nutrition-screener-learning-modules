@@ -56,10 +56,10 @@
             <form id="wholegrains-quiz" action="/wholegrains-quiz" method="POST">
                 <h5 style="text-align:center">Instruction: Please sort food items into the correct box.</h5>
                 <div class = "row">
-                    <div class="col category" id="wgrains">
+                    <div class="col category" id="wgrains" ondrop="drop_handler(event)" ondragover="dragover_handler(event)">
                         <h5>Whole Grains</h5>
                     </div>
-                    <div class="col category" id="rgrains">
+                    <div class="col category" id="rgrains" ondrop="drop_handler(event)" ondragover="dragover_handler(event)">
                         <h5>Refined Grains</h5>
                     </div>
                     <div class="col category" id="fooditems">
