@@ -16,9 +16,11 @@ const Quiz = () => {
     // Generate a list of 5 random number
     let nums = new Set();
     while (nums.size !== 5) {
-        nums.add(Math.floor(Math.random() * Object.keys(foodList).length));
+        const num = Math.floor(Math.random() * (Object.keys(foodList).length +1));
+        if (num !== 0){
+            nums.add(num);
+        };
     };
-    console.log(nums)
     
     // Empty list to hold all food item divs
     const foodItemDivs = [];
@@ -30,12 +32,13 @@ const Quiz = () => {
         
         foodItemDivs.push(
             <FoodItem {...foodObj}/>
-        )
-        console.log(foodItemDivs, 'foodItemDivs')   
+        ) 
     };
 
+    //Incomplete. Button to submit score to server and write to database
+    //Show scores and answers when clicked
     const handleClick = () => {
-        fetch(url, {
+        fetch('/wholegrains-quiz', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -46,31 +49,40 @@ const Quiz = () => {
         .then(data => console.log(data))
     }
     
-    console.log('react is working')
-
     return(
         <div className="quiz-wrapper">
             {foodItemDivs}
-            <button onClick={handleClick} />
+            <button onClick={handleClick}>Submit</button>
         </div>
     )
 }
 
 const FoodItem = (props) => {
     const { name, img, correct } = props;
+
+    const white = '#FFFFFF';
+    const lightblue = '#ADD8E6';
+
+    const [color, setColor] = React.useState(white);
     const [display, setDisplay] = React.useState(false);
+
     
+    const setSelected = () => {
+        const newColor = color === white ? lightblue : white;
+        setColor(newColor);
+    }; 
+
     let numWrong = 0;
 
-    const showAnswer = () => {
-        setDisplay(true);
-        if (correct !== 'True') {
-            numWrong += 1;
-        }
-    }
+    // const showAnswer = () => {
+    //     setDisplay(true);
+    //     if (correct !== 'True') {
+    //         numWrong += 1;
+    //     }
+    // }
 
     return(
-        <div className="food-item" id={name} onClick={showAnswer}>
+        <div className="food-item" id={name} onClick={setSelected} style= {{backgroundColor: color}}>
             <img className="food-img" src={img}/>
             <h5>{name}</h5>
             <Answer code={name} correctAnswer={correct} display={display ? 'block' : 'none'}/>
