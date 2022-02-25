@@ -56,19 +56,19 @@ table, th, td {
   background-color: lightpink
 }
 
-.wrapper{
-  justify-content:center;
+.quiz-wrapper{
+  text-align:center;
 }
 
 .food-item {
   max-width: 20%;
   margin: 0.5rem;
-  display: inline-block
+  display: inline-block;
+  text-align: center;
 }
 
 .food-img{
-  height: 12rem;
-  width: 100%;
+  width: 80%;
 }
 
 .category {

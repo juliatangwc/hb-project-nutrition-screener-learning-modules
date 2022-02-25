@@ -3,7 +3,7 @@ from datetime import datetime
 
 from model import connect_to_db, db
 import helper
-import m1_dietrec, m4_wholegrains
+import m1_dietrec, m3_protein, m4_wholegrains
 
 from jinja2 import StrictUndefined
 
@@ -548,6 +548,11 @@ def show_fruit_veg_info():
 @app.route("/protein")
 def show_protein_info():
     return render_template("protein.html")
+
+@app.route("/protein-quiz",methods=["POST"])
+def record_protein_quiz_score():
+    score = request.json
+    return m3_protein.post_score(score)
 
 @app.route("/wholegrains")
 def show_whole_grain_info():
