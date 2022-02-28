@@ -28,6 +28,9 @@ const Quiz = () => {
     //When a food component is clicked on, the code will be added to set at parent(quiz) level
 
     const [selectedAnswers,setSelectedAnswer] = React.useState(new Set())
+    const [display, setDisplay] = React.useState(false);
+    const [score, setScore] = React.useState(null);
+    const [correctAnswerDivs, setCorrectAnswerDivs] = React.useState([]);
 
     const setSelectedAnswers = (childData) => {
         if (selectedAnswers.has(childData)){
@@ -56,16 +59,25 @@ const Quiz = () => {
     //Show scores and answers when clicked
 
     const handleSubmit = () => {
-        let score = 0
+        let TempScore = 0;
+        const wrongList = [];
+        
         for(const num of nums){
             if (foodList[num]['correct'] && selectedAnswers.has(num)){
-                score += 1;
+                TempScore += 1;
             } else if (foodList[num]['correct'] === false && selectedAnswers.has(num) === false){
-                score += 1;
+                TempScore += 1;
+            } else if (foodList[num]['correct'] && selectedAnswers.has(num)===false){
+                wrongList.push(num);
+            } else if (foodList[num]['correct'] === false && selectedAnswers.has(num)){
+                wrongList.push(num);
             }
         };
 
+        setScore(TempScore);
+
         console.log(score, 'score');
+        console.log(wrongList, 'wrongList')
         
         fetch('/protein-quiz', {
             method: 'POST',
@@ -75,12 +87,30 @@ const Quiz = () => {
             }
         })
         .then(response => response.text())
-        .then(data => console.log(data))
+        .then(data => console.log(data));
+
+        setDisplay(true);
+
+        let answerDivs = [];
+
+        for(const wrong in wrongList){
+            const answer = foodList[wrong]['correctAnswer'];
+            console.log(answer, 'answer')
+            answerDivs.push(
+            <Answer correctAnswer={answer}/>
+            ) 
+        };
+
+        setCorrectAnswerDivs(answerDivs)
+
     }
     
     return(
         <div className="quiz-wrapper">
+            <Score score={score} display={display ? 'block' : 'none'} />
             {foodItemDivs}
+            <br></br>
+            {correctAnswerDivs}
             <br></br>
             <button onClick={handleSubmit}>Submit</button>
         </div>
@@ -94,7 +124,6 @@ const FoodItem = (props) => {
     const gray = '#D3D3D3';
 
     const [color, setColor] = React.useState(white);
-    const [display, setDisplay] = React.useState(false);
     
     const handleClickColor = () => {
         const newColor = color === white ? gray : white;
@@ -105,17 +134,26 @@ const FoodItem = (props) => {
         <div className="food-item" id={code} onClick={() => {handleClickColor(); setSelectedAnswers(code);}} style={{ backgroundColor: color }}>
             <img className="food-img" src={img}/>
             <h5>{name}</h5>
-            <Answer code={name} correctAnswer={correctAnswer} display={display ? 'block' : 'none'} />
         </div>
     )
 };
 
 const Answer = (props) => {
-    const {code, correctAnswer, display} = props;
+    const {correctAnswer} = props;
 
     return(
-        <div className="answer" id={code} style={{ 'display': display }}>
+        <div className="answer">
             <p>{correctAnswer}</p>
+        </div>
+    )
+}
+
+const Score = (props) => {
+    const {score, display} = props;
+
+    return(
+        <div className="score" style={{ 'display': display }}>
+            <p>Your score is {score}/4.</p>
         </div>
     )
 }
