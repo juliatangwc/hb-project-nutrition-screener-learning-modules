@@ -12,8 +12,8 @@ const foodList = {  1: {'code':1,'name':'chicken','img':'/static/img/protein-qui
                     12: {'code':12,'name':'milk','img':'static/img/protein-quiz/milk.jpg','correct':false,'correctAnswer':'You do not have to limit the intake of milk.'}
                 }
 
-const Quiz = () => {
 
+const randomFoodNums = () => {
     // Generate a list of 4 random number
     let nums = new Set();
     while (nums.size !== 4) {
@@ -22,16 +22,21 @@ const Quiz = () => {
             nums.add(num);
         };
     };
+    return nums;
+}
 
+const Quiz = () => {
     //Selected answer state to keep track of selections
     //Pass to individual food as prop
     //When a food component is clicked on, the code will be added to set at parent(quiz) level
 
-    const [selectedAnswers,setSelectedAnswer] = React.useState(new Set())
+    const [selectedAnswers,setSelectedAnswer] = React.useState(new Set());
+    const [nums, setFoodNums] = React.useState(randomFoodNums());
     const [display, setDisplay] = React.useState(false);
     const [score, setScore] = React.useState(null);
     const [correctAnswerDivs, setCorrectAnswerDivs] = React.useState([]);
 
+    // setFoodNums(randomFoodNums())
     const setSelectedAnswers = (childData) => {
         if (selectedAnswers.has(childData)){
             selectedAnswers.delete(childData)
@@ -78,6 +83,11 @@ const Quiz = () => {
 
         console.log(score, 'score');
         console.log(wrongList, 'wrongList')
+        console.log('size of wrong list', wrongList.length)
+        if (wrongList.length) {
+            console.log(typeof wrongList[0], wrongList[0], foodList[wrongList[0]])
+            console.log(typeof Object.keys(foodList)[0])
+        }
         
         fetch('/protein-quiz', {
             method: 'POST',
@@ -93,7 +103,8 @@ const Quiz = () => {
 
         let answerDivs = [];
 
-        for(const wrong in wrongList){
+        for(const wrong of wrongList){
+            console.log('wrong', wrong, typeof wrong, foodList[wrong])
             const answer = foodList[wrong]['correctAnswer'];
             console.log(answer, 'answer')
             answerDivs.push(
