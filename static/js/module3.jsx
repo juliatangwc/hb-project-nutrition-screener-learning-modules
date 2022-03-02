@@ -1,3 +1,4 @@
+//Hard coded questions and answers
 const foodList = {  1: {'code':1,'name':'chicken','img':'/static/img/protein-quiz/chicken.jpg','correct':false,'correctAnswer':'You do not have to limit the intake of chicken because it is a white meat.'},
                     2: {'code':2,'name':'salmon','img':'static/img/protein-quiz/salmon.jpg','correct':false,'correctAnswer':'You do not have to limit the intake of salmon because it is a fish.'},
                     3: {'code':3,'name':'shrimp','img':'static/img/protein-quiz/shrimp.jpg','correct':false,'correctAnswer':'You do not have to limit the intake of shrimp because it is a seafood.'},
@@ -12,7 +13,7 @@ const foodList = {  1: {'code':1,'name':'chicken','img':'/static/img/protein-qui
                     12: {'code':12,'name':'milk','img':'static/img/protein-quiz/milk.jpg','correct':false,'correctAnswer':'You do not have to limit the intake of milk.'}
                 }
 
-
+//Function to generate 4 random numbers, which will be used to key into foodList object above
 const randomFoodNums = () => {
     // Generate a list of 4 random number
     let nums = new Set();
@@ -23,32 +24,27 @@ const randomFoodNums = () => {
         };
     };
     return nums;
-}
+};
+
+//Quiz parent component that will be rendered at root
 
 const Quiz = () => {
     //Selected answer state to keep track of selections
     //Pass to individual food as prop
     //When a food component is clicked on, the code will be added to set at parent(quiz) level
     
-    const white = '#FFFFFF';
-    const gray = '#D3D3D3';
-    
     const [nums, setFoodNums] = React.useState(randomFoodNums());
-    const [color, setColor] = React.useState(white);
+    const [foodItemDivs, setFoodItemDivs] = React.useState([]);
     const [selectedAnswers,setSelectedAnswer] = React.useState(new Set());
     const [score, setScore] = React.useState(null);
     const [display, setDisplay] = React.useState(false);
     const [correctAnswerDivs, setCorrectAnswerDivs] = React.useState([]);
     const [resetQuestions, setResetQuestions] = React.useState(false);
     const [buttonText, setButtonText] = React.useState('Submit');
-    
-    
-    const handleClickColor = () => {
-        const newColor = color === white ? gray : white;
-        setColor(newColor);
-    }
 
-    // setFoodNums(randomFoodNums())
+    // const foodItemRef = React.useRef();
+    
+
     const setSelectedAnswers = (childData) => {
         if (selectedAnswers.has(childData)){
             selectedAnswers.delete(childData)
@@ -59,18 +55,28 @@ const Quiz = () => {
         }
     };
 
-    // Empty list to hold all food item divs
-    const foodItemDivs = [];
+    const generateFoodItemDivs = (nums) => {
+        
+        const newFoodItemDivs = [];
+        
+        for(const num of nums){
+            const foodObj = foodList[num]
+            console.log(foodObj, 'foodObj')
+            console.log(num)
+            newFoodItemDivs.push(
+                <FoodItem {...foodObj} setSelectedAnswers={setSelectedAnswers} />
+                // <FoodItem {...foodObj} setSelectedAnswers={setSelectedAnswers} ref={foodItemRef}/>
+            ) 
+        };
 
-    // For each number, use info in object to initialize a foodList div
-    for(const num of nums){
-        const foodObj = foodList[num]
-        console.log(foodObj, 'foodObj')
-        console.log(num)
-        foodItemDivs.push(
-            <FoodItem {...foodObj} setSelectedAnswers={setSelectedAnswers} />
-        ) 
+        return newFoodItemDivs;
     };
+    
+    React.useEffect(() => {
+        setFoodItemDivs(generateFoodItemDivs(nums));
+    },[nums])
+
+
 
     //Button to submit score to server and write to database
     //Show scores and answers when clicked
@@ -123,17 +129,20 @@ const Quiz = () => {
         setButtonText('Try again');
         setResetQuestions(true);
 
-    }
+    };
 
     const handleReset = () => {
+
         setFoodNums(randomFoodNums());
+        setFoodItemDivs(generateFoodItemDivs(nums));
+        // foodItemRef.current.resetColor();
         setButtonText('Submit');
         setResetQuestions(false);
         setSelectedAnswer(new Set());
         setScore(null);
         setDisplay(false);
         setCorrectAnswerDivs([]);
-        setColor(white);
+    
     }
 
     return(
@@ -156,10 +165,16 @@ const FoodItem = (props) => {
 
     const [color, setColor] = React.useState(white);
 
+    React.useEffect(() => {
+        setColor(white);
+    },[code]);
+    
+
     const handleClickColor = () => {
         const newColor = color === white ? gray : white;
         setColor(newColor);
-    }
+    };
+
     return(
         <div className="food-item" id={code} onClick={() => {handleClickColor(); setSelectedAnswers(code);}} style={{ backgroundColor: color }}>
             <img className="food-img" src={img}/>
@@ -167,6 +182,37 @@ const FoodItem = (props) => {
         </div>
     )
 };
+
+// const FoodItem = React.forwardRef((props, ref) => {
+//     const { code, name, img, setSelectedAnswers } = props;
+
+//     const white = '#FFFFFF';
+//     const gray = '#D3D3D3';
+
+//     const [color, setColor] = React.useState(white);
+
+//     // React.useEffect(() => {
+//     //     setColor(white);
+//     // },[code])
+    
+//     React.useImperativeHandle(ref, () => ({
+//         resetColor(){
+//             setColor(white);
+//         },
+//     }))
+
+//     const handleClickColor = () => {
+//         const newColor = color === white ? gray : white;
+//         setColor(newColor);
+//     };
+
+//     return(
+//         <div className="food-item" id={code} onClick={() => {handleClickColor(); setSelectedAnswers(code);}} style={{ backgroundColor: color }}>
+//             <img className="food-img" src={img}/>
+//             <h5>{name}</h5>
+//         </div>
+//     )
+// });
 
 const Answer = (props) => {
     const {correctAnswer} = props;
@@ -182,7 +228,7 @@ const Score = (props) => {
     const {score, display} = props;
 
     return(
-        <div className="score" style={{ 'display': display }}>
+        <div className="score-display" style={{ 'display': display }}>
             <p>Your score is {score}/4.</p>
         </div>
     )
