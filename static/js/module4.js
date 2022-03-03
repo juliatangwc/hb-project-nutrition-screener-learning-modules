@@ -19,33 +19,17 @@ fetch('/wholegrains-quiz')
     .then(data => {
             const questions = data;
             for (const question in questions) {
-                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div id="item${question}" draggable="true">${questions[question]}</div>`)
+                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]}</div>`)
             };
     });
 
 //Add functions for drag and drop
 function dragstart_handler(ev) {
     // Add the target element's id to the data transfer object
-    ev.dataTransfer.setData("text/plain", ev.target.id);
-    ev.dataTransfer.setData("text/html", ev.target.outerHTML);
+    ev.dataTransfer.setData("text", ev.target.id);
+    // ev.dataTransfer.setData("text/html", ev.target.outerHTML);
     ev.dataTransfer.dropEffect = "move";
   }
-
-window.addEventListener('DOMContentLoaded', () => {
-
-    //Get elements under fooditems div with id starting with item
-    const matches = [];
-    const elements = document.getElementById("fooditems").children;
-    for(var i = 0; i < elements.length; i++) {
-        if(elements[i].id.indexOf('item') == 0) {
-            matches.push(elements[i]);
-        }
-    }
-    //For matching elements, add them to ondragstart event listener
-    for (const match in matches){
-        match.addEventListener("dragstart", dragstart_handler);
-    }
-  });
 
 function dragover_handler(ev) {
     ev.preventDefault();
@@ -54,71 +38,92 @@ function dragover_handler(ev) {
 function drop_handler(ev) {
     ev.preventDefault();
     // Get the id of the target and add the moved element to the target's DOM
-    const data = ev.dataTransfer.getData("text/html");
+    const data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
    }
 
-   // Post request for sending answers and getting results 
-// const quiz = document.querySelector('#dietrec-quiz')
-// const button = document.querySelector('#submit-button');
+// Post request for sending answers and getting results 
+
+const button = document.querySelector('#submit-button');
    
 
-// button.addEventListener('click', evt => {
-//     evt.preventDefault();
+button.addEventListener('click', evt => {
+    evt.preventDefault();
 
-//     if (button.innerHTML === 'Submit'){
+    if (button.innerHTML === 'Submit'){
 
-//         console.log('current button: submit')
+        console.log('current button: submit')
         
-//         button.innerHTML = 'Try again';
+        button.innerHTML = 'Try again';
+
+        const wgrains = document.querySelector('#wgrains');
+        const rgrains = document.querySelector('#rgrains');
+
+        const q = (id) => (document.querySelector(id));
+
+        const wGrainList = [];
+        const rGrainList = [];
+
+        for (let i = 1; i < 13; i++) {
+            wgrains.contains(q(`#item${i}`))? wGrainList.push(i):null;
+            rgrains.contains(q(`#item${i}`))? rGrainList.push(i):null;
+        };
+        
+        console.log(wGrainList);
+        console.log(rGrainList);
+
+        const formInputs = {
+            'wgrains': wGrainList,
+            'rgrains': rGrainList
+        };
+
+        console.log(formInputs);
     
-//         const q = (id) => (document.querySelector(id))
-
-//         const formInputs = {
-//             1: q('#m1q1') !== null ? q('#m1q1').value : null,
-//             2: q('#m1q2') !== null ? q('#m1q2').value : null,
-//             3: q('#m1q3') !== null ? q('#m1q3').value : null,
-//             4: q('#m1q4') !== null ? q('#m1q4').value : null,
-//             5: q('#m1q5') !== null ? q('#m1q5').value : null,
-//             6: q('#m1q6') !== null ? q('#m1q6').value : null,
-//             7: q('#m1q7') !== null ? q('#m1q7').value : null,
-//             8: q('#m1q8') !== null ? q('#m1q8').value : null,
-//             9: q('#m1q9') !== null ? q('#m1q9').value : null,
-//             10: q('#m1q10') !== null ? q('#m1q10').value : null,
-//         };
-
-//         console.log(formInputs);
-
-//         fetch('/dietrec-quiz', {
-//             method:'POST',
-//             body: JSON.stringify(formInputs),
-//             headers:{
-//                 'Content-Type': 'application/json',
-//             },
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data);
-//             document.querySelector('#score-display').innerHTML = `Your score is ${data['score']}/3.`;
-//             for (const item in data){
-//                 if (data[item] !== null && item !== 'score') {
-//                     document.querySelector(`#li${item}`).insertAdjacentHTML ('beforeend', `<br>${data[item]}<br>`)
-//                 };
-//             };  
-//         });
-//     }else{
-//         button.innerHTML = 'Submit';
+        fetch('/wholegrains-quiz', {
+            method:'POST',
+            body: JSON.stringify(formInputs),
+            headers:{
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            document.querySelector('#score-display').innerHTML = `Your score is ${data['score']}/4.`;
+            document.querySelector('#correct-answers').innerHTML = data['answers']; 
+        });
+    }else{
+        button.innerHTML = 'Submit';
         
-//         fetch('/dietrec-quiz')
-//         .then(response => response.json())
-//         .then(data => {
-//             const questions = data;
-//             document.querySelector('#question-box').innerHTML = '';
-//             document.querySelector('#score-display').innerHTML = '';
-//             for (const question in questions) {
-//                 document.querySelector('#question-box').insertAdjacentHTML ('beforeend', `<li id="li${question}">${questions[question]}</li>`)
-//             };
-//         });
-//     };
-// });
+        fetch('/wholegrains-quiz')
+        .then(response => response.json())
+        .then(data => {
+            const questions = data;
+            document.querySelector('#score-display').innerHTML = '';
+            document.querySelector('#correct-answers').innerHTML = '';
+            document.querySelector('#fooditems').innerHTML = '<h5>Food Items</h5> ';
+            document.querySelector('#wgrains').innerHTML = '<h5>Whole Grains</h5>';
+            document.querySelector('#rgrains').innerHTML = '<h5>Refined Grains</h5>';
+            for (const question in questions) {
+                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]}</div>`)
+            };
+        });
+    };
+});
 
+// Example of how to grab child elements starting with the same words
+// window.addEventListener('DOMContentLoaded', () => {
+
+//     //Get elements under fooditems div with id starting with item
+//     const matches = [];
+//     const elements = document.getElementById("fooditems").children;
+//     for(var i = 0; i < elements.length; i++) {
+//         if(elements[i].id.indexOf('item') == 0) {
+//             matches.push(elements[i]);
+//         }
+//     }
+//     //For matching elements, add them to ondragstart event listener
+//     for (const match in matches){
+//         match.addEventListener("dragstart", dragstart_handler);
+//     }
+//   });

@@ -564,8 +564,7 @@ def show_wholegrains_quiz():
 
 @app.route("/wholegrains-quiz",methods=["POST"])
 def check_wholegrains_quiz_answers():
-    answers = request.json
-    data = {int(k): v for k, v in answers.items()}
+    data = request.json
     return m4_wholegrains.check_answers(data)
 
 @app.route("/logout")

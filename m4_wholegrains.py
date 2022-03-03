@@ -38,7 +38,7 @@ module4_answer_key = {
     12 : 'wgrains'
 }
 
-module1_correct_answers = {
+module4_correct_answers = {
     1 : 'White rice is a refined grain.',
     2 : 'Brown rice is a whole grain.',
     3 : 'Quinoa is a whole grain.',
@@ -65,47 +65,56 @@ def generate_questions():
     
     return json.dumps(questions)
 
-# def check_answers(answers):
-#     """Receive input as json.
-#         Check answers against answer key.
-#         Return responses based on correctness of answers."""
-#     #Set score to 0
-#     score = 0
-
-#     #Check answers. Return correct answer if answer is incorrect. 
-#     #If question was not assigned, answer will be None.
-#     #Correct answer will increase score by 1. 
-#     for answer in answers:
-#         if answers[answer] != None:
-#             if answers[answer] in module1_answer_key[answer]:
-#                 answers[answer] = "<p class='correct-answer'>Correct!</p>"
-#                 score += 1
-#             else:
-#                 answers[answer] = f"<p class='wrong-answer'>Incorrect! <br> The correct answer is: {module1_correct_answers[answer]} </p>"
+def check_answers(data):
+    """Receive input as json with two lists (wgrains, rgrains) containing item numbers.
+        Check answers against answer key.
+        Return score and correct answers to be displayed."""
     
-#     #Write score to db
-#     answers['score'] = score
-#     timestamp = helper.create_timestamp()
-#     user_id = session['user_id']
-#     module_id = 1
-#     new_score_record = helper.set_score(timestamp, user_id, module_id, score)
-#     db.session.add(new_score_record)
-#     db.session.commit()
+    #Set score to 0
+    score = 0
+    correct_answers = []
+
+    #Check answers by going through the two lists
+    #Loop through wgrains list
+    #If module4_answer_key[item] is 'wgrains', it is correct: add 1 point
+    #Else, it is incorrect, append module4_correct_answers[item] to correct_answers list
+    #Loop through rgrains list and do the same
+    #Return an object with 'score' and 'answers' (change answer from list to string)
+
+    for item in data['wgrains']:
+        if module4_answer_key[item] == 'wgrains':
+            score += 1
+        else:
+            correct_answers.append(module4_correct_answers[item])
     
-#     #Check if completed date exists for module assignment.
-#     #If not, set timestamp
-#     assignment = helper.get_assigned_module(user_id, module_id)
+    for item in data['rgrains']:
+        if module4_answer_key[item] == 'rgrains':
+            score += 1
+        else:
+            correct_answers.append(module4_correct_answers[item])
 
-#     if assignment.completion_date is None:
-#         assignment.completion_date = timestamp
+    if correct_answers != []:
+        correct_answers.insert(0,'<h6>Here are the correct answers:</h6>')
     
-#     db.session.add(assignment)
-#     db.session.commit()
+    answers = '<br>'.join(correct_answers)
 
-#     return json.dumps(answers)
+    #Write score to db
+    timestamp = helper.create_timestamp()
+    user_id = session['user_id']
+    module_id = 4
+    new_score_record = helper.set_score(timestamp, user_id, module_id, score)
+    db.session.add(new_score_record)
+    db.session.commit()
+    
+    #Check if completed date exists for module assignment
+    #If not, set timestamp
+    assignment = helper.get_assigned_module(user_id, module_id)
 
- 
+    if assignment.completion_date is None:
+        assignment.completion_date = timestamp
+    
+    db.session.add(assignment)
+    db.session.commit()
 
-
-
+    return json.dumps({'score':score, 'answers':answers})
 
