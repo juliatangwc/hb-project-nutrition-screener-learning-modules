@@ -9,7 +9,7 @@ import json
 import helper
 
 module4_food_items = {
-    1 : '<p>White rice</p>',
+    1 : '<img src="/static/img/wgrains-quiz/white_rice.jpg"<br><p>White rice</p>',
     2 : '<p>Brown rice</p>',
     3 : '<p>Quinoa</p>',
     4 : '<p>Millet</p>',

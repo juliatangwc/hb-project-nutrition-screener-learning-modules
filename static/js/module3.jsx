@@ -33,6 +33,7 @@ const Quiz = () => {
     //Pass to individual food as prop
     //When a food component is clicked on, the code will be added to set at parent(quiz) level
     
+    //All states in quiz
     const [nums, setFoodNums] = React.useState(randomFoodNums());
     const [foodItemDivs, setFoodItemDivs] = React.useState([]);
     const [selectedAnswers,setSelectedAnswer] = React.useState(new Set());
@@ -41,10 +42,7 @@ const Quiz = () => {
     const [correctAnswerDivs, setCorrectAnswerDivs] = React.useState([]);
     const [resetQuestions, setResetQuestions] = React.useState(false);
     const [buttonText, setButtonText] = React.useState('Submit');
-
-    // const foodItemRef = React.useRef();
     
-
     const setSelectedAnswers = (childData) => {
         if (selectedAnswers.has(childData)){
             selectedAnswers.delete(childData)
@@ -61,10 +59,12 @@ const Quiz = () => {
         
         for(const num of nums){
             const foodObj = foodList[num]
+            const name = foodList[num]['name']
             console.log(foodObj, 'foodObj')
             console.log(num)
+            const timestamp = Date.now()
             newFoodItemDivs.push(
-                <FoodItem {...foodObj} setSelectedAnswers={setSelectedAnswers} />
+                <FoodItem {...foodObj} setSelectedAnswers={setSelectedAnswers} unique={`${name}_${timestamp}`} key={`${name}_${timestamp}`}/>
                 // <FoodItem {...foodObj} setSelectedAnswers={setSelectedAnswers} ref={foodItemRef}/>
             ) 
         };
@@ -75,7 +75,6 @@ const Quiz = () => {
     React.useEffect(() => {
         setFoodItemDivs(generateFoodItemDivs(nums));
     },[nums])
-
 
 
     //Button to submit score to server and write to database
@@ -135,7 +134,6 @@ const Quiz = () => {
 
         setFoodNums(randomFoodNums());
         setFoodItemDivs(generateFoodItemDivs(nums));
-        // foodItemRef.current.resetColor();
         setButtonText('Submit');
         setResetQuestions(false);
         setSelectedAnswer(new Set());
@@ -158,7 +156,7 @@ const Quiz = () => {
 }
 
 const FoodItem = (props) => {
-    const { code, name, img, setSelectedAnswers } = props;
+    const { code, name, img, setSelectedAnswers, unique} = props;
 
     const white = '#FFFFFF';
     const gray = '#D3D3D3';
@@ -167,7 +165,7 @@ const FoodItem = (props) => {
 
     React.useEffect(() => {
         setColor(white);
-    },[code]);
+    },[unique]);
     
 
     const handleClickColor = () => {
@@ -182,37 +180,6 @@ const FoodItem = (props) => {
         </div>
     )
 };
-
-// const FoodItem = React.forwardRef((props, ref) => {
-//     const { code, name, img, setSelectedAnswers } = props;
-
-//     const white = '#FFFFFF';
-//     const gray = '#D3D3D3';
-
-//     const [color, setColor] = React.useState(white);
-
-//     // React.useEffect(() => {
-//     //     setColor(white);
-//     // },[code])
-    
-//     React.useImperativeHandle(ref, () => ({
-//         resetColor(){
-//             setColor(white);
-//         },
-//     }))
-
-//     const handleClickColor = () => {
-//         const newColor = color === white ? gray : white;
-//         setColor(newColor);
-//     };
-
-//     return(
-//         <div className="food-item" id={code} onClick={() => {handleClickColor(); setSelectedAnswers(code);}} style={{ backgroundColor: color }}>
-//             <img className="food-img" src={img}/>
-//             <h5>{name}</h5>
-//         </div>
-//     )
-// });
 
 const Answer = (props) => {
     const {correctAnswer} = props;
