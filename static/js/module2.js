@@ -14,14 +14,27 @@
 //Try again button
 
 //Fetch request for getting food items
-fetch('/wholegrains-quiz')
+fetch('/fruitveg-quiz')
     .then(response => response.json())
     .then(data => {
+            console.log(data)
             const questions = data;
             for (const question in questions) {
-                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]}</div>`)
+                document.querySelector('#choices').insertAdjacentHTML ('beforeend', 
+                `<div id="choice${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]['answer']}</div>`)
+                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', 
+                `<span id="item${question}">
+                    <div class="food-item-box">
+                        <img src="${questions[question]['img']}">
+                        <br>
+                        <p>${questions[question]['name']}</p>
+                    </div>
+                    <div class="food-item-answer-box" id="drop${question} ondrop="drop_handler(event)" ondragover="dragover_handler(event)></div>
+                </span>`)
             };
     });
+
+//with name, img, answers
 
 //Add functions for drag and drop
 function dragstart_handler(ev) {

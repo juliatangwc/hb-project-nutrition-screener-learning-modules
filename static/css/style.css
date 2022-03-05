@@ -67,6 +67,22 @@ table, th, td {
   text-align: center;
 }
 
+.food-item-box {
+  width: 30%;
+  margin: 0.5rem;
+  display: inline-block;
+  text-align: center;
+  border:1px solid black;
+}
+
+.food-item-answer-box {
+  width: 30%;
+  margin: 0.5rem;
+  display: inline-block;
+  text-align: center;
+  border:1px solid black;
+}
+
 .food-img{
   width: 80%;
 }
@@ -77,3 +93,4 @@ table, th, td {
   margin: 2rem;
   text-align: center;
 }
+
