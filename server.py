@@ -548,6 +548,11 @@ def show_fruit_veg_info():
 def show_fruit_veg_quiz():
     return m2_fruitveg.generate_questions()
 
+@app.route("/fruitveg-quiz",methods=["POST"])
+def check_fruit_veg_quiz_answers():
+    data = request.json
+    return m2_fruitveg.check_answers(data)
+
 @app.route("/protein")
 def show_protein_info():
     return render_template("protein.html")

@@ -67,33 +67,21 @@ def generate_questions():
     return json.dumps(questions)
 
 def check_answers(data):
-    """Receive input as json with two lists (wgrains, rgrains) containing item numbers.
-        Check answers against answer key.
+    """Receive input as json with two items: score and wrong list.
+        Post score to db. 
         Return score and correct answers to be displayed."""
     
-    #Set score to 0
-    score = 0
+    #Get score from json
+    score = int(data['score'])
+
+    #Initiate a list to hold correct answers
+    #Insert heading if list is not empty
+    #Convert to string to be inserted into div
     correct_answers = []
 
-    #Check answers by going through the two lists
-    #Loop through wgrains list
-    #If module4_answer_key[item] is 'wgrains', it is correct: add 1 point
-    #Else, it is incorrect, append module4_correct_answers[item] to correct_answers list
-    #Loop through rgrains list and do the same
-    #Return an object with 'score' and 'answers' (change answer from list to string)
-
-    for item in data['wgrains']:
-        if module4_answer_key[item] == 'wgrains':
-            score += 1
-        else:
-            correct_answers.append(module4_correct_answers[item])
-    
-    for item in data['rgrains']:
-        if module4_answer_key[item] == 'rgrains':
-            score += 1
-        else:
-            correct_answers.append(module4_correct_answers[item])
-
+    for item in data['wrong']:
+        correct_answers,append(module2_correct_answers[item])
+  
     if correct_answers != []:
         correct_answers.insert(0,'<h6>Here are the correct answers:</h6>')
     
@@ -102,7 +90,7 @@ def check_answers(data):
     #Write score to db
     timestamp = helper.create_timestamp()
     user_id = session['user_id']
-    module_id = 4
+    module_id = 2
     new_score_record = helper.set_score(timestamp, user_id, module_id, score)
     db.session.add(new_score_record)
     db.session.commit()

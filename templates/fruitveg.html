@@ -81,10 +81,15 @@
         <div class = "col-9" id="fooditems">
         
         </div>
-        <div class = "col-3" id="choices">
-            <h5>Choices</h5>
+        <div class = "col-3">
+            <div class="choice-container" id="choices" ondrop="drop_handler(event,this)" ondragover="dragover_handler(event)">
+                <h5>Choices</h5>
+            </div>
         </div>
     </div>
+    <br>
+    <p id="correct-answers"></p>
+    <br>
     <button type="button" class="btn btn-secondary" id="submit-button">Submit</button>
     <script src="/static/js/module2.js"></script>
 </div>

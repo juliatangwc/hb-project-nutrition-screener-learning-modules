@@ -35,11 +35,11 @@ function dragover_handler(ev) {
     ev.preventDefault();
     ev.dataTransfer.dropEffect = "move";
    }
-function drop_handler(ev) {
+function drop_handler(ev, ele) {
     ev.preventDefault();
     // Get the id of the target and add the moved element to the target's DOM
     const data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    ele.appendChild(document.getElementById(data));
    }
 
 // Post request for sending answers and getting results 

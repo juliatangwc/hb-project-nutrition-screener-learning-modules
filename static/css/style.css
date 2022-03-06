@@ -67,22 +67,6 @@ table, th, td {
   text-align: center;
 }
 
-.food-item-box {
-  width: 30%;
-  margin: 0.5rem;
-  display: inline-block;
-  text-align: center;
-  border:1px solid black;
-}
-
-.food-item-answer-box {
-  width: 30%;
-  margin: 0.5rem;
-  display: inline-block;
-  text-align: center;
-  border:1px solid black;
-}
-
 .food-img{
   width: 80%;
 }
@@ -93,4 +77,31 @@ table, th, td {
   margin: 2rem;
   text-align: center;
 }
+
+.food-item-container {
+  width: 30%;
+  display: inline-block;
+}
+
+.food-item-box {
+  margin: 0.5rem;
+  text-align: center;
+  border:1px solid black;
+}
+
+.food-item-answer-box {
+  height: 50px;
+  margin: 0.5rem;
+  text-align: center;
+  border:1px solid black;
+}
+
+.choice-container {
+  border:1px solid black;
+  width: 90%;
+  height: 200px;
+  text-align: center;
+}
+
+
 
