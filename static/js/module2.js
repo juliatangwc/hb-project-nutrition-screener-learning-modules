@@ -84,7 +84,7 @@ button.addEventListener('click', evt => {
         //check which food item divs are on the screen by looking for drop[i]
         //if drop[i] contains choice[i], correct, increment score
         let score = 0;
-        const wrong = [];
+        const answers = {};
 
         const q = (id) => (document.querySelector(id));
         const foodItems = document.querySelector('#fooditems');
@@ -92,20 +92,18 @@ button.addEventListener('click', evt => {
         for (let i = 1; i < 11; i++) {
             if (foodItems.contains(q(`#drop${i}`))) {
                 const dropZone = q(`#drop${i}`);
-                if (dropZone.contains(q(`#answer${i}`))){
-                    score += 1
-                }else{
-                    wrong.push(i)
+                for (let j = 1; j < 11; j++) {
+                    if (dropZone.contains(q(`#answer${j}`))){
+                        answers[i] = j
+                    }
                 };
             };
         };
         
-        console.log(score);
-        console.log(wrong, 'Wrong');
+        console.log(answers, 'Answers obj');
 
         const formInputs = {
-            'score': score,
-            'wrong': wrong
+            'answers': answers,
         };
 
         console.log(formInputs, 'formInputs');

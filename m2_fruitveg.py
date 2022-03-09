@@ -70,18 +70,26 @@ def check_answers(data):
     """Receive input as json with two items: score and wrong list.
         Post score to db. 
         Return score and correct answers to be displayed."""
+    answers = data['answers']
     
-    #Get score from json
-    score = int(data['score'])
-
-    #Initiate a list to hold correct answers
-    #Insert heading if list is not empty
-    #Convert to string to be inserted into div
+    #Set empty score variable
+    score = 0
+    #Set empty list to hold all correct answers
     correct_answers = []
 
-    for item in data['wrong']:
-        correct_answers,append(module2_correct_answers[item])
-  
+    #Loop through data to check if selected answer is correct
+    #data = {question number: answer number}
+    for number, answer in answers.items():
+        number = int(number)
+        answer = int(answer)
+        if module2_food_items[number]['answer'] == module2_food_items[answer]['answer']:
+            score += 1
+        else: 
+            correct_answers.append(module2_correct_answers[number])
+
+
+    #Insert heading if list is not empty
+    #Convert to string to be inserted into div
     if correct_answers != []:
         correct_answers.insert(0,'<h6>Here are the correct answers:</h6>')
     
