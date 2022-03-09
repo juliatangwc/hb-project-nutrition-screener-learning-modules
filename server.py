@@ -463,8 +463,10 @@ def calculate_cut_offs():
 @app.route("/login")
 def show_login_form():
     """Show form for existing user to log in."""
-
-    return render_template("login.html")
+    if session['user_id']:
+        return redirect("/dashboard")
+    else:
+        return render_template("login.html")
 
 @app.route("/login",methods=["POST"])
 def user_login():
