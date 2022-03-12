@@ -14,7 +14,10 @@ app.jinja_env.undefined = StrictUndefined
 @app.route("/")
 def function():
     """Show homepage"""
-    return render_template("homepage.html")
+    if session.get('user_id', None) != None:
+        return redirect("/dashboard")
+    else:
+        return render_template("homepage.html")
 
 @app.route("/screener")
 def display_screener():
@@ -463,7 +466,7 @@ def calculate_cut_offs():
 @app.route("/login")
 def show_login_form():
     """Show form for existing user to log in."""
-    if session['user_id']:
+    if session.get('user_id', None) != None:
         return redirect("/dashboard")
     else:
         return render_template("login.html")
@@ -517,13 +520,36 @@ def user_login():
 def show_dashboard():
     if session.get('user_id', None) != None:
         user_id = session['user_id']
-        #Get user's name
-        user = helper.get_user_by_id(user_id)
-        name = user.name
-        #Get all assigned modules for user by user ID
-        assigned_modules = helper.get_all_assigned_modules_by_user(user_id)
+        screener_id = helper.get_most_updated_screener_id(user_id) #this will return 0 if none started
+        if screener_id == 0:
+            flash ("Please finish the screener to see assigned modules.")
+            #Start a new screener
+            screener = helper.create_initial_screener(user_id)
+            db.session.add(screener)
+            db.session.commit()
+            screener_id = screener.screener_id
+            session['screener_id'] = screener_id
+            timestamp = helper.create_timestamp()
+            #Create progress tracker
+            screener_tracker = 1
+            progress = helper.create_progress_tracker(screener_id, timestamp, screener_tracker)
+            db.session.add(progress)
+            db.session.commit()
+            #Redirect to question 1
+            return redirect("/screener/1")
+        else:
+            progress = helper.get_screener_tracker(screener_id)
+            if progress.screener_tracker == 13:
+                 #Get user's name
+                user = helper.get_user_by_id(user_id)
+                name = user.name
+                #Get all assigned modules for user by user ID
+                assigned_modules = helper.get_all_assigned_modules_by_user(user_id)
 
-        return render_template("dashboard.html", name=name, assigned_modules=assigned_modules)
+                return render_template("dashboard.html", name=name, assigned_modules=assigned_modules)
+            else:
+                flash ("Please finish the screener to see assigned modules.")
+                return redirect(f"/screener/{progress.screener_tracker}")
     else:
         flash("Please log in to access modules.")
         return redirect("/login")
