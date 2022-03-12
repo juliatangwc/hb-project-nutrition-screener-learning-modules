@@ -1,3 +1,36 @@
+html, body {
+  margin:0px;
+  height:100%;
+}
+
+#background {
+  width: 100%;
+  height: 100%;
+  background-image: url(/static/img/background.jpg);
+  background-size: cover;
+}
+
+.centered {
+  width: 60%;
+  height: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.centered-inner {
+  width: 80%;
+  height: 60%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.translucent {
+  background: rgba(255, 255, 255, 0.8)
+}
+
 .centered-img {
   display: block;
   margin-left: auto;
@@ -30,9 +63,15 @@
   margin-right: 2rem
 } 
 
-.btn-light:hover {
-  background-color: #909091;
-  border-color: #020202;
+.margin {
+  margin-left: 10px;
+  margin-right: 10px
+}
+
+.btn:hover {
+  background-color: #b9b9b9;
+  border-color: #363636;
+  color: #363636;
 }
 
 table {
