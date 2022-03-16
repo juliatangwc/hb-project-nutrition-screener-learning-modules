@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
 {% block title %}Healthy Eating for Cancer Prevention{% endblock %}
 {% block content%}
-<div class = "container-fluid">
+<div class = "container-fluid" id="background2">
   <div class = "row">
-      <div class = "col">
-        <h1>Log In</h1>
+    <div class = "col text-center centered translucent">
+      <div class="centered-inner">
         <form action="/login" method="POST">
-          <p>
-            Email <input type="text" name="email">
-          </p>
-          <p>
-            Password <input type="password" name="password">
-          </p>
-          <p>
-            <input type="submit">
-          </p>
+        <h4>Log In</h4>
+        <br>
+        <div>
+          <label for="email">Email</label>
+          <input type="text" name="email" id="email">
+        </div>
+        <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        </div>
+        <br>
+        <button class="btn btn-outline-dark margin" type="submit" id="submit">Submit</button>
         </form>
       </div>
+    </div>  
   </div>
 </div>
 
