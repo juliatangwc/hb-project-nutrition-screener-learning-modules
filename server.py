@@ -86,32 +86,36 @@ def process_form_to_db():
     
     #Question 1: Vegetables days
     elif tracker == 1:
-        #Update screener database with form data
-        screener_id = session['screener_id']
-        veg_days = int(request.form.get("veg_days"))
-        screener = helper.update_screener_q1(screener_id, veg_days)
-        db.session.add(screener)
-        db.session.commit()
-
-        if veg_days == 0:
-            #Skip question 2. Q2 defaults to 2. Update progress tracker
-            veg_qty = 0
-            screener = helper.update_screener_q2(screener_id, veg_qty)
+        if request.form.get("veg_days") != None:
+            #Update screener database with form data
+            screener_id = session['screener_id']
+            veg_days = int(request.form.get("veg_days"))
+            screener = helper.update_screener_q1(screener_id, veg_days)
             db.session.add(screener)
-            timestamp = helper.create_timestamp()
-            screener_tracker = 3
-            progress = helper.update_progress(screener_id,timestamp,screener_tracker)
-            db.session.add(progress)
             db.session.commit()
-            return redirect("/screener/3")
+
+            if veg_days == 0:
+                #Skip question 2. Q2 defaults to 2. Update progress tracker
+                veg_qty = 0
+                screener = helper.update_screener_q2(screener_id, veg_qty)
+                db.session.add(screener)
+                timestamp = helper.create_timestamp()
+                screener_tracker = 3
+                progress = helper.update_progress(screener_id,timestamp,screener_tracker)
+                db.session.add(progress)
+                db.session.commit()
+                return redirect("/screener/3")
+            else:
+                #Redirect to question2. Update progress tracker
+                timestamp = helper.create_timestamp()
+                screener_tracker = 2
+                progress = helper.update_progress(screener_id,timestamp,screener_tracker)
+                db.session.add(progress)
+                db.session.commit()
+                return redirect("/screener/2")
         else:
-            #Redirect to question2. Update progress tracker
-            timestamp = helper.create_timestamp()
-            screener_tracker = 2
-            progress = helper.update_progress(screener_id,timestamp,screener_tracker)
-            db.session.add(progress)
-            db.session.commit()
-            return redirect("/screener/2")
+            flash("Please choose an answer to proceed.")
+            return redirect(request.referrer)
 
     #Question 2: Vegetables quantity
     elif tracker == 2:
