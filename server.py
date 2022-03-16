@@ -507,6 +507,7 @@ def user_login():
                 #Redirect to question 1
                 return redirect("/screener/1")
             else:
+                session['screener_id'] = screener_id
                 progress = helper.get_screener_tracker(screener_id)
                 if progress.screener_tracker == 13:
                     return redirect("/dashboard")
