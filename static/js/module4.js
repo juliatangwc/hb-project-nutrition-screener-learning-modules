@@ -19,7 +19,7 @@ fetch('/wholegrains-quiz')
     .then(data => {
             const questions = data;
             for (const question in questions) {
-                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]}</div>`)
+                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div class="cards" id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]}</div>`)
             };
     });
 
@@ -105,7 +105,7 @@ button.addEventListener('click', evt => {
             document.querySelector('#wgrains').innerHTML = '<h5>Whole Grains</h5>';
             document.querySelector('#rgrains').innerHTML = '<h5>Refined Grains</h5>';
             for (const question in questions) {
-                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]}</div>`)
+                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div class="cards" id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]}</div>`)
             };
         });
     };

@@ -9,18 +9,18 @@ import json
 import helper
 
 module4_food_items = {
-    1 : '<img src="/static/img/wgrains-quiz/white_rice.jpg"<br><p>White rice</p>',
-    2 : '<p>Brown rice</p>',
-    3 : '<p>Quinoa</p>',
-    4 : '<p>Millet</p>',
-    5 : '<p>Oatmeal</p>',
-    6 : '<p>Regular pasta</p>',
-    7 : '<p>Whole wheat pasta</p>',
-    8 : '<p>White bread</p>',
-    9 : '<p>Rice noodles</p>',
-    10 : '<p>Egg noodles</p>',
-    11 : '<p>Soba noodles</p>',
-    12 : '<p>Popcorn</p>'
+    1 : '<img class="thumb" src="/static/img/wgrains-quiz/white_rice.jpg"<br><p>White rice</p>',
+    2 : '<img class="thumb" src="/static/img/wgrains-quiz/brown_rice.jpg"<br><p>Brown rice</p>',
+    3 : '<img class="thumb" src="/static/img/wgrains-quiz/quinoa.jpg"<br><p>Quinoa</p>',
+    4 : '<img class="thumb" src="/static/img/wgrains-quiz/millet.jpg"<br><p>Millet</p>',
+    5 : '<img class="thumb" src="/static/img/wgrains-quiz/oatmeal.jpg"<br><p>Oatmeal</p>',
+    6 : '<img class="thumb" src="/static/img/wgrains-quiz/regular_pasta.jpg"<br><p>Regular pasta</p>',
+    7 : '<img class="thumb" src="/static/img/wgrains-quiz/whole_wheat_pasta.jpg"<br><p>Whole wheat pasta</p>',
+    8 : '<img class="thumb" src="/static/img/wgrains-quiz/white_bread.jpg"<br><p>White bread</p>',
+    9 : '<img class="thumb" src="/static/img/wgrains-quiz/rice_noodles.jpg"<br><p>Rice noodles</p>',
+    10 : '<img class="thumb" src="/static/img/wgrains-quiz/egg_noodles.jpg"<br><p>Egg noodles</p>',
+    11 : '<img class="thumb" src="/static/img/wgrains-quiz/soba_noodles.jpg"<br><p>Soba noodles</p>',
+    12 : '<img class="thumb" src="/static/img/wgrains-quiz/popcorn.jpg"<br><p>Popcorn</p>'
 }
 
 module4_answer_key = {
@@ -94,7 +94,8 @@ def check_answers(data):
             correct_answers.append(module4_correct_answers[item])
 
     if correct_answers != []:
-        correct_answers.insert(0,'<h6>Here are the correct answers:</h6>')
+        correct_answers.insert(0,'<br><h6>Here are the correct answers:</h6>')
+        correct_answers.append('<br>')
     
     answers = '<br>'.join(correct_answers)
 
