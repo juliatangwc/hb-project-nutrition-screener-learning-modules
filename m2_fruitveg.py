@@ -9,8 +9,8 @@ import json
 import helper
 
 module2_food_items = {
-    1 : {'name':'Cooked spinach',
-        'img':'/static/img/fruitveg-quiz/cooked_spinach.jpg',
+    1 : {'name':'Cooked vegetables',
+        'img':'/static/img/fruitveg-quiz/cooked_veg.jpg',
         'answer':'Half a cup'},
     2 : {'name':'Baby spinach salad',
         'img':'/static/img/fruitveg-quiz/spinach_salad.jpg',
@@ -28,7 +28,7 @@ module2_food_items = {
         'img':'/static/img/fruitveg-quiz/tomato.jpg',
         'answer':'One medium'},
     7 : {'name':'Baby carrots',
-        'img':'/static/img/fruitveg-quiz/baby_carrots.jpg',
+        'img':'/static/img/fruitveg-quiz/baby_carrots.png',
         'answer':'One cup (7-10 pcs)'},
     8 : {'name':'Cooked carrots',
         'img':'/static/img/fruitveg-quiz/cooked_carrots.jpg',

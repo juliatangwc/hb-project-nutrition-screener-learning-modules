@@ -235,6 +235,7 @@ table, th, td {
   margin: 0.5rem;
   text-align: center;
   border:1px solid black;
+  padding: 1rem;
 }
 
 .food-item-answer-box {
@@ -250,6 +251,8 @@ table, th, td {
   height: 200px;
   text-align: center;
 }
+
+
 
 
 
