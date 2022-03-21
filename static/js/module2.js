@@ -21,7 +21,7 @@ fetch('/fruitveg-quiz')
             const questions = data;
             for (const question in questions) {
                 document.querySelector('#choices').insertAdjacentHTML ('beforeend', 
-                `<div id="answer${question}" draggable="true" droppable="false" ondragstart="dragstart_handler(event)">${questions[question]['answer']}</div>`)
+                `<div class="m-3" id="answer${question}" draggable="true" droppable="false" ondragstart="dragstart_handler(event)">${questions[question]['answer']}</div>`)
                 document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', 
                 `<div class="food-item-container" id="container${question}">
                     <div class="food-item-box">
@@ -141,7 +141,7 @@ button.addEventListener('click', evt => {
             
             for (const question in questions) {
                 document.querySelector('#choices').insertAdjacentHTML ('beforeend', 
-                `<div id="answer${question}" draggable="true" droppable="false" ondragstart="dragstart_handler(event)">${questions[question]['answer']}</div>`);
+                `<div class="m-3" id="answer${question}" draggable="true" droppable="false" ondragstart="dragstart_handler(event)">${questions[question]['answer']}</div>`);
                 document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', 
                 `<div class="food-item-container" id="container${question}">
                     <div class="food-item-box">

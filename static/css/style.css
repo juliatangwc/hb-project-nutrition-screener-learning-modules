@@ -26,6 +26,11 @@ a:hover{
   background-size: cover;
 }
 
+#background_fruitveg {
+  background-image: url(/static/img/background_fruitveg.jpg);
+  background-size: cover;
+}
+
 .centered {
   width: 60%;
   height: 50%;
@@ -205,6 +210,11 @@ table, th, td {
   background-color: lightpink
 }
 
+.question-container {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
 .drop-box{
   height: 500px;
 }
@@ -221,7 +231,12 @@ table, th, td {
   margin: 1rem;
   background-color: lightgray;
   border-radius: 10px;
-  padding: 2.5%;
+  padding: 10px;
+}
+
+.cards-inner {
+  width: 100%;
+  font-size: 12px;
 }
 
 .middle {
@@ -237,10 +252,13 @@ table, th, td {
   margin: 0.5rem;
   display: inline-block;
   text-align: center;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .food-img{
   width: 80%;
+  border-radius: 10px;
 }
 
 .category {
@@ -260,6 +278,7 @@ table, th, td {
   text-align: center;
   border:1px solid black;
   padding: 1rem;
+  border-radius:10px;
 }
 
 .food-item-answer-box {
@@ -267,6 +286,7 @@ table, th, td {
   margin: 0.5rem;
   text-align: center;
   border:1px solid black;
+  border-radius:10px;
 }
 
 .choice-container {
@@ -274,6 +294,7 @@ table, th, td {
   width: 90%;
   height: 200px;
   text-align: center;
+  border-radius: 10px;
 }
 
 .dietrec-img{

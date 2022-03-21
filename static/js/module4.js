@@ -19,7 +19,9 @@ fetch('/wholegrains-quiz')
     .then(data => {
             const questions = data;
             for (const question in questions) {
-                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', `<div class="cards" id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">${questions[question]}</div>`)
+                document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', 
+                `<div class="cards" id="item${question}" draggable="true" ondragstart="dragstart_handler(event)">
+                ${questions[question]}</div>`)
             };
     });
 

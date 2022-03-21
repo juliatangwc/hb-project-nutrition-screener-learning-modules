@@ -66,7 +66,7 @@ const Quiz = () => {
             newFoodItemDivs.push(
                 <FoodItem {...foodObj} setSelectedAnswers={setSelectedAnswers} unique={`${name}_${timestamp}`} key={`${name}_${timestamp}`}/>
                 // <FoodItem {...foodObj} setSelectedAnswers={setSelectedAnswers} ref={foodItemRef}/>
-            ) 
+            )
         };
 
         return newFoodItemDivs;
@@ -149,8 +149,7 @@ const Quiz = () => {
             {foodItemDivs}
             <br></br>
             {correctAnswerDivs}
-            <br></br>
-            <button onClick={resetQuestions ? handleReset : handleSubmit}>{buttonText}</button>
+            <button className="btn btn-outline-dark m-3" onClick={resetQuestions ? handleReset : handleSubmit}>{buttonText}</button>
         </div>
     )
 }
@@ -185,7 +184,7 @@ const Answer = (props) => {
     const {correctAnswer} = props;
 
     return(
-        <div className="answer">
+        <div className="correct-answer">
             <p>{correctAnswer}</p>
         </div>
     )

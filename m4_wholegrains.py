@@ -9,18 +9,18 @@ import json
 import helper
 
 module4_food_items = {
-    1 : '<img class="thumb" src="/static/img/wgrains-quiz/white_rice.jpg"<br><p>White rice</p>',
-    2 : '<img class="thumb" src="/static/img/wgrains-quiz/brown_rice.jpg"<br><p>Brown rice</p>',
-    3 : '<img class="thumb" src="/static/img/wgrains-quiz/quinoa.jpg"<br><p>Quinoa</p>',
-    4 : '<img class="thumb" src="/static/img/wgrains-quiz/millet.jpg"<br><p>Millet</p>',
-    5 : '<img class="thumb" src="/static/img/wgrains-quiz/oatmeal.jpg"<br><p>Oatmeal</p>',
-    6 : '<img class="thumb" src="/static/img/wgrains-quiz/regular_pasta.jpg"<br><p>Regular pasta</p>',
-    7 : '<img class="thumb" src="/static/img/wgrains-quiz/whole_wheat_pasta.jpg"<br><p>Whole wheat pasta</p>',
-    8 : '<img class="thumb" src="/static/img/wgrains-quiz/white_bread.jpg"<br><p>White bread</p>',
-    9 : '<img class="thumb" src="/static/img/wgrains-quiz/rice_noodles.jpg"<br><p>Rice noodles</p>',
-    10 : '<img class="thumb" src="/static/img/wgrains-quiz/egg_noodles.jpg"<br><p>Egg noodles</p>',
-    11 : '<img class="thumb" src="/static/img/wgrains-quiz/soba_noodles.jpg"<br><p>Soba noodles</p>',
-    12 : '<img class="thumb" src="/static/img/wgrains-quiz/popcorn.jpg"<br><p>Popcorn</p>'
+    1 : '<img class="thumb" src="/static/img/wgrains-quiz/white_rice.jpg"><div class="cards-inner">White rice</div>',
+    2 : '<img class="thumb" src="/static/img/wgrains-quiz/brown_rice.jpg"><div class="cards-inner">Brown rice</div>',
+    3 : '<img class="thumb" src="/static/img/wgrains-quiz/quinoa.jpg"><div class="cards-inner">Quinoa</div>',
+    4 : '<img class="thumb" src="/static/img/wgrains-quiz/millet.jpg"><div class="cards-inner">Millet</div>',
+    5 : '<img class="thumb" src="/static/img/wgrains-quiz/oatmeal.jpg"><div class="cards-inner">Oatmeal</div>',
+    6 : '<img class="thumb" src="/static/img/wgrains-quiz/regular_pasta.jpg"><div class="cards-inner">Regular pasta</div>',
+    7 : '<img class="thumb" src="/static/img/wgrains-quiz/whole_wheat_pasta.jpg"><div class="cards-inner">Whole wheat pasta</div>',
+    8 : '<img class="thumb" src="/static/img/wgrains-quiz/white_bread.jpg"><div class="cards-inner">White bread</div>',
+    9 : '<img class="thumb" src="/static/img/wgrains-quiz/rice_noodles.jpg"><div class="cards-inner">Rice noodles</div>',
+    10 : '<img class="thumb" src="/static/img/wgrains-quiz/egg_noodles.jpg"><div class="cards-inner">Egg noodles</div>',
+    11 : '<img class="thumb" src="/static/img/wgrains-quiz/soba_noodles.jpg"><div class="cards-inner">Soba noodles</div>',
+    12 : '<img class="thumb" src="/static/img/wgrains-quiz/popcorn.jpg"><div class="cards-inner">Popcorn</div>'
 }
 
 module4_answer_key = {
