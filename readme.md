@@ -50,7 +50,7 @@ Some quizzes use the drag and drop HTML feature, making them easy for users to n
 
 <img src="/static/img/readme/dragndrop.gif" alt="Drag and Drop" width="500px"/>
 
-Quiz built with React gives immediate feedback when users make a selection, giving users quick visual feedback.
+Quiz built with React gives quick visual feedback when users make a selection.
 
 <img src="/static/img/readme/react.gif" alt="React" width="500px"/>
 
