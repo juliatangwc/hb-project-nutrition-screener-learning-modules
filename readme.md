@@ -1,6 +1,8 @@
-# ![Nutrition Self-management Platform](/static/img/readme/logo.png "Logo") Nutrition Self-management Platform
+# <img src="/static/img/readme/logo.png" alt="Nutrition Self-management Platform" width="200"/>Nutrition Self-management Platform
 
 Nutrition Self-management Platform shows users personalized nutrition information based on a 12-item screener. The screener includes a progress tracking feature, allowing users to stop and resume anytime. Users are assigned up to 4 learning modules based on criteria that correspond to dietary recommendations. Each module consists of theme-based nutrition information and a quiz that checks for understanding. Quizzes include fill-in-the-blanks, matching, sorting and select-all-correct. The platform can be easily adapted to different settings that require screening, task assignment and knowledge checking.
+
+![Nutrition Self-management Platform](/static/img/readme/logo.png "Homepage")
 
 **Contents**
 - [Tech Stack](#tech-stack)
