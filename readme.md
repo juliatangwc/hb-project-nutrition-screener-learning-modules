@@ -1,4 +1,4 @@
-# <img src="/static/img/readme/logo.png" alt="Nutrition Self-management Platform" width="40px"/>Nutrition Self-management Platform
+# <img src="/static/img/readme/logo.png" alt="Nutrition Self-management Platform" width="40px"/> Nutrition Self-management Platform
 
 Nutrition Self-management Platform shows users personalized nutrition information based on a 12-item screener. The screener includes a progress tracking feature, allowing users to stop and resume anytime. Users are assigned up to 4 learning modules based on criteria that correspond to dietary recommendations. Each module consists of theme-based nutrition information and a quiz that checks for understanding. Quizzes include fill-in-the-blanks, matching, sorting and select-all-correct. The platform can be easily adapted to different settings that require screening, task assignment and knowledge checking.
 
@@ -28,7 +28,7 @@ After creating an account, users are guided through the screener. Backend algori
 
 Through keeping a progress tracker in the Postgres database and updating it each time users move on to a new question, users are able to leave anytime and resume the screener at the right question.
 
-<img src="/static/img/readme/progress.gif" alt="Progress Tracking" width="200px"/>
+<img src="/static/img/readme/progress.gif" alt="Progress Tracking" width="300px"/>
 
 **Module assignment**
 
