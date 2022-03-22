@@ -28,7 +28,7 @@ After creating an account, users are guided through the screener. Backend algori
 
 Through keeping a progress tracker in the Postgres database and updating it each time users move on to a new question, users are able to leave anytime and resume the screener at the right question.
 
-<img src="/static/img/readme/progress.gif" alt="Progress Tracking" width="400px"/>
+<img src="/static/img/readme/progress.gif" alt="Progress Tracking" width="500px"/>
 
 **Module assignment**
 
@@ -38,11 +38,17 @@ After completion of the screener, users are assigned modules based on cut-offs t
 
 Quizzes are built using a mix of plain javascript and React. With the use of AJAX requests, users can check answers and retry without reloading the page.
 
+<img src="/static/img/readme/ajax.gif" alt="Ajax" width="500px"/>
+
 **Enhanced interactivity**
 
 Some quizzes use the drag and drop HTML feature, making them easy for users to navigate.
 
+<img src="/static/img/readme/dragndrop.gif" alt="Drag and Drop" width="500px"/>
+
 Quiz built with React gives immediate feedback when users make a selection, giving users quick visual feedback.
+
+<img src="/static/img/readme/react.gif" alt="React" width="500px"/>
 
 ## Future Features
 
