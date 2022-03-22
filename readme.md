@@ -24,6 +24,8 @@ Nutrition Self-management Platform shows users personalized nutrition informatio
 
 After creating an account, users are guided through the screener. Backend algorithms ensure that users are only shown relevant questions and check inputs inputs before they are submitted to the database.
 
+<img src="/static/img/readme/screener.gif" alt="Screener" width="500px"/>
+
 **Screener progress tracking**
 
 Through keeping a progress tracker in the Postgres database and updating it each time users move on to a new question, users are able to leave anytime and resume the screener at the right question.
@@ -33,6 +35,8 @@ Through keeping a progress tracker in the Postgres database and updating it each
 **Module assignment**
 
 After completion of the screener, users are assigned modules based on cut-offs that correspond to dietary recommendations. Each module has a quiz at the end to check for understanding.
+
+<img src="/static/img/readme/modules.gif" alt="Modules" width="500px"/>
 
 **Unlimited quiz attempts**
 
