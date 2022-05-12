@@ -82,7 +82,7 @@ def check_answers(answers):
     timestamp = helper.create_timestamp()
     user_id = session['user_id']
     module_id = 1
-    new_score_record = helper.set_score(timestamp, user_id, module_id, score)
+    new_score_record = Score.set_score(timestamp, user_id, module_id, score)
     db.session.add(new_score_record)
     db.session.commit()
     

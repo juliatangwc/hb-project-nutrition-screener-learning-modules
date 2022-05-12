@@ -27,6 +27,7 @@ class User(db.Model):
     @classmethod
     def create_user(cls, email, password, name):
         """Create and return a new user."""
+
         user = cls(email=email, password=password, name=name)
         return user
 
@@ -35,7 +36,7 @@ class User(db.Model):
         """Check if user with email exists.
         If true, return user. 
         If false, return None."""
-    
+
         return cls.query.filter(cls.email == email).first()
 
     @classmethod
@@ -87,6 +88,13 @@ class Screener(db.Model):
         return f"""<Screener screener_id={self.screener_id} user_id={self.user_id} 
                 completed_on={self.completed_on}>"""
     
+    @classmethod
+    def create_initial_screener(cls, user_id):
+        """Create and return a new screener object."""
+
+        screener = Screener(user_id=user_id)
+        return screener
+
     @classmethod
     def get_most_updated_screener_id(cls, user_id):
         """Find all screeners done by user by user ID. Return the most updated screener ID."""
@@ -158,6 +166,13 @@ class Module(db.Model):
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
 
+    @classmethod
+    def create_module(cls, name, description, href, img):
+        """Create and return a new module."""
+
+        module = cls(name=name, description=description, href=href, img=img)
+        return module
+
 class Score(db.Model):
     """A record to track score for module quizzes."""
 
@@ -177,6 +192,13 @@ class Score(db.Model):
     def __repr__(self):
         return f"""<Score score_id={self.score_id} user_id={self.user_id}
                     module_id={self.module_id} score={self.score}>"""
+    
+    @classmethod
+    def set_score(cls, timestamp, user_id, module_id, score):
+        """Create and return a new score record."""
+
+        score = cls(score_date=timestamp, user_id=user_id, module_id=module_id, score=score)
+        return score
 
 def connect_to_db(flask_app, db_uri="postgresql:///diet-screener", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

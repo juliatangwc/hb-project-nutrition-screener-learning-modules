@@ -16,7 +16,7 @@ def post_score(score):
     timestamp = helper.create_timestamp()
     user_id = session['user_id']
     module_id = 3
-    new_score_record = helper.set_score(timestamp, user_id, module_id, score)
+    new_score_record = Score.set_score(timestamp, user_id, module_id, score)
     db.session.add(new_score_record)
     db.session.commit()
     

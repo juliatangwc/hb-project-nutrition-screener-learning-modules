@@ -62,7 +62,7 @@ def process_form_to_db():
             session['user_id'] = user_id
 
             #Start a new screener with user ID and add to database
-            screener = helper.create_initial_screener(user_id)
+            screener = Screener.create_initial_screener(user_id)
             db.session.add(screener)
             db.session.commit()
 
@@ -513,7 +513,7 @@ def user_login():
             screener_id = Screener.get_most_updated_screener_id(user_id) #this will return 0 if none started
             if screener_id == 0:
                 #Start a new screener
-                screener = helper.create_initial_screener(user_id)
+                screener = Screener.create_initial_screener(user_id)
                 db.session.add(screener)
                 db.session.commit()
                 screener_id = screener.screener_id
@@ -549,7 +549,7 @@ def show_dashboard():
         if screener_id == 0:
             flash ("Please finish the screener to see assigned modules.")
             #Start a new screener
-            screener = helper.create_initial_screener(user_id)
+            screener = Screener.create_initial_screener(user_id)
             db.session.add(screener)
             db.session.commit()
             screener_id = screener.screener_id

@@ -28,7 +28,7 @@ for module in module_data:
     img = module['img']
         
     # Create a module
-    new_module= helper.create_module(name, description, href, img)
+    new_module= Module.create_module(name, description, href, img)
     modules.append(new_module)
 
     # Add module to database

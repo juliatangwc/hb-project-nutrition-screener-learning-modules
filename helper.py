@@ -4,32 +4,6 @@ from model import db, User, Screener, Progress, ModuleAssignment, Module, Score,
 from datetime import datetime
 
 
-    
-def get_most_updated_screener_id(user_id):
-    """Find all screeners done by user by user ID. Return the most updated screener ID."""
-    screeners = Screener.query.filter_by(user_id=user_id).all()
-    most_updated = 0
-
-    for screener in screeners:
-        if screener.screener_id > most_updated:
-            most_updated = screener.screener_id
-    
-    return most_updated
-
-def create_module(name, description, href, img):
-    """Create and return a new module."""
-
-    module = Module(name=name, description=description, href=href, img=img)
-
-    return module
-
-def create_initial_screener(user_id):
-    """Create and return a new screener object."""
-
-    screener = Screener(user_id=user_id)
-
-    return screener
-
 def update_screener_q1(screener_id, veg_days):
     """Update answer to Q1 to database. Return screener object."""
     screener = Screener.query.get(screener_id)
@@ -171,12 +145,7 @@ def get_assigned_module(user_id, module_id):
 
     return assignment
 
-def set_score(timestamp, user_id, module_id, score):
-    """Create and return a new score record."""
 
-    score = Score(score_date=timestamp, user_id=user_id, module_id=module_id, score=score)
-
-    return score
 
 def create_timestamp():
     now = datetime.now()
