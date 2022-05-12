@@ -1,7 +1,7 @@
 from flask import Flask, render_template, session, request, redirect, flash
 from datetime import datetime
 
-from model import connect_to_db, db
+from model import connect_to_db, db, User, Screener, Progress, ModuleAssignment, Module, Score
 import helper
 import m1_dietrec, m2_fruitveg, m3_protein, m4_wholegrains
 
@@ -46,14 +46,14 @@ def process_form_to_db():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        user_exist = helper.get_user_by_email(email)
+        user_exist = User.get_user_by_email(email)
 
         if user_exist:
             flash ("This email is already registered on our website. Please log in.")
-            return redirect ("/")
+            return redirect ("/login")
         else:
             #Create new user and add to database
-            user = helper.create_user(email, password, name)
+            user = User.create_user(email, password, name)
             db.session.add(user)
             db.session.commit()
 
@@ -502,15 +502,15 @@ def user_login():
     email = request.form.get("email")
     password = request.form.get("password")
     
-    user_exist = helper.get_user_by_email(email)
+    user_exist = User.get_user_by_email(email)
 
     if user_exist:
-        checked_user = helper.check_user_password(email, password)
+        checked_user = User.check_user_password(email, password)
         if checked_user:
             session['user_id'] = checked_user
             flash ("Success! You are logged in!")
             user_id = session['user_id']
-            screener_id = helper.get_most_updated_screener_id(user_id) #this will return 0 if none started
+            screener_id = Screener.get_most_updated_screener_id(user_id) #this will return 0 if none started
             if screener_id == 0:
                 #Start a new screener
                 screener = helper.create_initial_screener(user_id)
@@ -545,7 +545,7 @@ def user_login():
 def show_dashboard():
     if session.get('user_id', None) != None:
         user_id = session['user_id']
-        screener_id = helper.get_most_updated_screener_id(user_id) #this will return 0 if none started
+        screener_id = Screener.get_most_updated_screener_id(user_id) #this will return 0 if none started
         if screener_id == 0:
             flash ("Please finish the screener to see assigned modules.")
             #Start a new screener
@@ -566,7 +566,7 @@ def show_dashboard():
             progress = helper.get_screener_tracker(screener_id)
             if progress.screener_tracker == 13:
                  #Get user's name
-                user = helper.get_user_by_id(user_id)
+                user = User.get_user_by_id(user_id)
                 name = user.name
                 #Get all assigned modules for user by user ID
                 assigned_modules = helper.get_all_assigned_modules_by_user(user_id)

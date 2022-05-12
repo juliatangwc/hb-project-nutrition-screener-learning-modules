@@ -3,35 +3,7 @@
 from model import db, User, Screener, Progress, ModuleAssignment, Module, Score, connect_to_db
 from datetime import datetime
 
-def create_user(email, password, name):
-    """Create and return a new user."""
 
-    user = User(email=email, password=password, name=name)
-
-    return user
-
-def get_user_by_email(email):
-    """Check if user with email exists.
-        If true, return user. 
-        If false, return None."""
-    
-    return User.query.filter(User.email == email).first()
-
-def check_user_password(email, password):
-    """If password entered matches password in databse, return True.
-        If password does not  match, return False."""
-    
-    user = User.query.filter(User.email == email).first()
-
-    if user.password == password:
-        return user.user_id
-    else:
-        return False
-
-def get_user_by_id(user_id):
-    """Return a user object by user ID."""
-    
-    return User.query.get(user_id)
     
 def get_most_updated_screener_id(user_id):
     """Find all screeners done by user by user ID. Return the most updated screener ID."""

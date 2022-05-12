@@ -1,6 +1,7 @@
-"""Models for diet screener app."""
+"""Models for nutrition self-management app."""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -22,6 +23,38 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User user_id={self.user_id} name={self.name} email={self.email}>"
+
+    @classmethod
+    def create_user(cls, email, password, name):
+        """Create and return a new user."""
+        user = cls(email=email, password=password, name=name)
+        return user
+
+    @classmethod
+    def get_user_by_email(cls, email):
+        """Check if user with email exists.
+        If true, return user. 
+        If false, return None."""
+    
+        return cls.query.filter(cls.email == email).first()
+
+    @classmethod
+    def check_user_password(cls, email, password):
+        """If password entered matches password in databse, return True.
+        If password does not match, return False."""
+    
+        user = cls.query.filter(cls.email == email).first()
+
+        if user.password == password:
+            return user.user_id
+        else:
+            return False
+    
+    @classmethod
+    def get_user_by_id(cls, user_id):
+        """Return a user object by user ID."""
+    
+        return cls.query.get(user_id)
 
 class Screener(db.Model):
     """A record of screener results."""
@@ -53,6 +86,18 @@ class Screener(db.Model):
     def __repr__(self):
         return f"""<Screener screener_id={self.screener_id} user_id={self.user_id} 
                 completed_on={self.completed_on}>"""
+    
+    @classmethod
+    def get_most_updated_screener_id(cls, user_id):
+        """Find all screeners done by user by user ID. Return the most updated screener ID."""
+        screeners = cls.query.filter_by(user_id=user_id).all()
+        most_updated = 0
+
+        for screener in screeners:
+            if screener.screener_id > most_updated:
+                most_updated = screener.screener_id
+        
+        return most_updated
 
 
 class Progress(db.Model):
