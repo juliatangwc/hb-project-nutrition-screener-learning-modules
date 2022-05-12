@@ -90,7 +90,8 @@ def process_form_to_db():
             #Update screener database with form data
             screener_id = session['screener_id']
             veg_days = int(request.form.get("veg_days"))
-            screener = helper.update_screener_q1(screener_id, veg_days)
+            screener = Screener.get_screener_by_id(screener_id)
+            screener.q1_veg_days = veg_days
             db.session.add(screener)
             db.session.commit()
 

@@ -92,7 +92,7 @@ class Screener(db.Model):
     def create_initial_screener(cls, user_id):
         """Create and return a new screener object."""
 
-        screener = Screener(user_id=user_id)
+        screener = cls(user_id=user_id)
         return screener
 
     @classmethod
@@ -106,6 +106,13 @@ class Screener(db.Model):
                 most_updated = screener.screener_id
         
         return most_updated
+    
+    @classmethod
+    def get_screener_by_id(cls, screener_id):
+        """Get screener object by screener ID."""
+    
+        screener = cls.query.get(screener_id)
+        return screener
 
 
 class Progress(db.Model):

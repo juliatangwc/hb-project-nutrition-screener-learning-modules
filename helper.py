@@ -4,12 +4,6 @@ from model import db, User, Screener, Progress, ModuleAssignment, Module, Score,
 from datetime import datetime
 
 
-def update_screener_q1(screener_id, veg_days):
-    """Update answer to Q1 to database. Return screener object."""
-    screener = Screener.query.get(screener_id)
-    screener.q1_veg_days = veg_days
-
-    return screener
 
 def update_screener_q2(screener_id, veg_qty):
     """Update answer to Q2 to database. Return screener object."""
