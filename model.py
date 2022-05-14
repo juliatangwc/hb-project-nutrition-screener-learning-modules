@@ -28,8 +28,7 @@ class User(db.Model):
     def create_user(cls, email, password, name):
         """Create and return a new user."""
 
-        user = cls(email=email, password=password, name=name)
-        return user
+        return cls(email=email, password=password, name=name)
 
     @classmethod
     def get_user_by_email(cls, email):
@@ -92,8 +91,7 @@ class Screener(db.Model):
     def create_initial_screener(cls, user_id):
         """Create and return a new screener object."""
 
-        screener = cls(user_id=user_id)
-        return screener
+        return cls(user_id=user_id)
 
     @classmethod
     def get_most_updated_screener_id(cls, user_id):
@@ -110,9 +108,13 @@ class Screener(db.Model):
     @classmethod
     def get_screener_by_id(cls, screener_id):
         """Get screener object by screener ID."""
-    
-        screener = cls.query.get(screener_id)
-        return screener
+        return cls.query.get(screener_id)
+
+    @classmethod
+    def get_screener_by_user_id(cls, user_id):
+        """Get screener object given user ID. Return screener object."""
+
+        return cls.query.filter(Screener.user_id == user_id).first()
 
 
 class Progress(db.Model):
@@ -132,6 +134,28 @@ class Progress(db.Model):
     def __repr__(self):
         return f"""<Progress progress_id={self.progress_id} screener_id={self.screener_id}
                     screener_tracker={self.screener_tracker}>"""
+    
+    @classmethod
+    def create_progress_tracker(cls, screener_id, timestamp, screener_tracker):
+        """Create and return a new progress tracker."""
+
+        return cls(screener_id=screener_id, timestamp=timestamp, screener_tracker=screener_tracker)
+    
+    @classmethod
+    def update_progress(cls, screener_id, timestamp, screener_tracker):
+        """Update and return progress tracker."""
+
+        tracker = cls.query.filter(cls.screener_id == screener_id).first()
+        tracker.timestamp = timestamp
+        tracker.screener_tracker = screener_tracker
+
+        return tracker
+    
+    @classmethod
+    def get_screener_tracker(cls, screener_id):
+        """Find progress tracker by screener ID. Return progress object."""
+    
+        return cls.query.filter_by(screener_id=screener_id).first()
 
 class ModuleAssignment(db.Model):
     """A record to track module assignments."""
