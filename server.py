@@ -484,22 +484,22 @@ def calculate_cut_offs():
     
     #Assignment logic
     #Everyone gets module 1 on dietary recommendations
-    module1 = helper.assign_module(timestamp, user_id, 1)
+    module1 = ModuleAssignment.assign_module(timestamp, user_id, 1)
     db.session.add(module1)
 
     #If daily fv intake is less than 5, assign module 2 on fruit and veg
     if daily_fv_intake <5: 
-        module2 = helper.assign_module(timestamp, user_id, 2)
+        module2 = ModuleAssignment.assign_module(timestamp, user_id, 2)
         db.session.add(module2)
     
     #If weekly red/processed meat intake is larger than 3, assign module 3 on protein
     if weekly_red_pro_meat_intake > 3:
-        module3 = helper.assign_module(timestamp, user_id, 3)
+        module3 = ModuleAssignment.assign_module(timestamp, user_id, 3)
         db.session.add(module3)
 
     #If daily whole grain ratio is less than 1, meaning less than half is whole grain, assign module 4 on whole grains
     if daily_grain_ratio < 1:
-        module4 = helper.assign_module(timestamp, user_id, 4)
+        module4 = ModuleAssignment.assign_module(timestamp, user_id, 4)
         db.session.add(module4)
 
     #Write to database
@@ -589,7 +589,7 @@ def show_dashboard():
                 user = User.get_user_by_id(user_id)
                 name = user.name
                 #Get all assigned modules for user by user ID
-                assigned_modules = helper.get_all_assigned_modules_by_user(user_id)
+                assigned_modules = ModuleAssignment.get_all_assigned_modules_by_user(user_id)
 
                 return render_template("dashboard.html", name=name, assigned_modules=assigned_modules)
             else:

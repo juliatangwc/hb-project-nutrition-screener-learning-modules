@@ -112,7 +112,7 @@ class Screener(db.Model):
 
     @classmethod
     def get_screener_by_user_id(cls, user_id):
-        """Get screener object given user ID. Return screener object."""
+        """Get screener object given user ID. Return screener object. Return None if no match."""
 
         return cls.query.filter(Screener.user_id == user_id).first()
 
@@ -176,6 +176,30 @@ class ModuleAssignment(db.Model):
     def __repr__(self):
         return f"""<Assignment assignment_id={self.assignment_id} user_id={self.user_id}
                     module_id={self.module_id}>"""
+    
+    @classmethod
+    def assign_module(cls, assignment_date, user_id, module_id):
+        """Assign a module to a user."""
+
+        return cls(assignment_date=assignment_date, user_id=user_id, module_id=module_id)
+    
+    @classmethod
+    def get_module_assignment(cls, user_id, module_id):
+        """Get a module assignment by user ID and module ID. Return None if no match."""
+
+        return cls.query.filter(ModuleAssignment.user_id==user_id, ModuleAssignment.module_id==module_id).first()
+
+    @classmethod
+    def get_all_assigned_modules_by_user(cls, user_id):
+        """Find all modules assigned to user. Return a list of asssigned modules as objects."""
+    
+        assigned_modules = []
+        assignments = cls.query.filter_by(user_id=user_id)
+
+        for assignment in assignments:
+            assigned_modules.append(assignment.module)
+        
+        return assigned_modules
 
 class Module(db.Model):
     """A learning module."""

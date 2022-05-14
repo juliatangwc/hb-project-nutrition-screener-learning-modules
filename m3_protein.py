@@ -1,6 +1,6 @@
 """Module 3 Quiz Functions"""
 from flask import Flask, session
-from model import db, User, Module, Score, connect_to_db
+from model import db, User, Module, ModuleAssignment, Score, connect_to_db
 from datetime import datetime
 
 import json
@@ -22,7 +22,7 @@ def post_score(score):
     
     #Check if completed date exists for module assignment.
     #If not, set timestamp
-    assignment = helper.get_assigned_module(user_id, module_id)
+    assignment = ModuleAssignment.get_module_assignment(user_id, module_id)
 
     if assignment.completion_date is None:
         assignment.completion_date = timestamp
