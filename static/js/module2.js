@@ -145,7 +145,7 @@ button.addEventListener('click', evt => {
                 document.querySelector('#fooditems').insertAdjacentHTML ('beforeend', 
                 `<div class="food-item-container" id="container${question}">
                     <div class="food-item-box">
-                        <img src="${questions[question]['img']}">
+                        <img class="food-img" src="${questions[question]['img']}">
                         <br>
                         <p>${questions[question]['name']}</p>
                     </div>
